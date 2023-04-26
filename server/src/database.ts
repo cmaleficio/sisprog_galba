@@ -24,7 +24,7 @@ const isDatabaseConnected = async () => {
 
 const getDataFromDatabase = (request: any, response: any) => {
   pool.query(
-    "SELECT * FROM puntos_analogicos ORDER BY marca_de_tiempo DESC",
+    "SELECT * FROM t012_historico_tag ORDER BY fe_valor DESC",
     (error: any, results: any) => {
       if (error) {
         throw error;

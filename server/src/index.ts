@@ -7,9 +7,11 @@ import IndexRoutes from './routes';
 import cors from 'cors';
 import corsOptions from './configs/corsOptions';
 // imports
+const io = require('socket.io')(3001)
 
-
-
+io.on ('connection', (socket: any) => {
+   console.log(socket.id)
+})
 // Initializations
 const app = express();
 
@@ -37,3 +39,4 @@ app.listen(app.get('port'), async () => {
    console.log(`conectada ${hasConexionWithDatabase}`)
    console.log('app server on port', app.get('port'))
 })
+

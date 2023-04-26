@@ -2,6 +2,12 @@ import express from "express";
 import path from "path";
 const browserObject = require("./browser");
 const scraperController = require("./pageController");
+const io = require ('socket.io')(3001,{
+  cors: {
+      origin: [process.env.SERVERURL],
+  },
+})
+
 // importing routes
 
 // Initializations
@@ -10,8 +16,12 @@ const app = express();
 // Settings
 app.set("port", process.env.PORT || 3200);
 
-app.listen(app.get("port"), async () => {
+/* app.listen(app.get("port"), async () => {
   console.log("app server on port", app.get("port"));
+}); */
+
+io.on('conection', (socket: any) =>{
+  console.log(socket.id);
 });
 
 app.get("/results", async (req, res) => {  
@@ -26,12 +36,6 @@ app.get("/results", async (req, res) => {
       data: body.new_data,
       length: body.new_data.length
    });
-  /*  const secondBody = secondFilteredData(data[1])
-   console.log("secondBody", secondBody)
-   res.json({
-    data: secondBody.new_data,
-    length: secondBody.new_data.length
-   }) */
 });
 
 const filteredData = (data: Array<any>) => {
@@ -70,40 +74,3 @@ const filteredData = (data: Array<any>) => {
     new_data
   };
 };
-
-/* const secondFilteredData = (data: Array<any>) => {
-  const new_data: any = [];
-  let rowLength = 11;
-  let row = 11;
-  let minIndex = 1;
-  let maxIndex = 11;
-  let group: any = []
-
-  data?.forEach((value, index) => {
-    if (index < data.length - 1) {
-      // añado el row length a la condicional para comenzar a contar a partir
-      // de la segunda iteracion.
-      if (index >= minIndex && index <= maxIndex && index > rowLength) {
-        // inserto los datos de la columna Nombre
-        group.push(value)
-      }
-      // al llegar al final de la fila aumento los indices para poder
-      // añadir la info de la siguiente fila
-      // reset
-      if (index === row) {
-        minIndex += rowLength;
-        maxIndex += rowLength;
-        row += rowLength;
-        new_data.push(group)
-        group = []
-      }
-    }
-  });
-
-  // TODO: mejorar
-  new_data.shift();
-
-  return {
-    new_data
-  };
-}; */

@@ -16,6 +16,12 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cibCcMastercard, cifUs, cilPeople } from '@coreui/icons'
+/* import {io} from 'socket.io-client';
+
+const socket = io ('http://localhost:3001')
+socket.on("connect",() => {
+    displayMessage(`Estas conectado with id: ${socket.id}`)
+}) */
 
 import avatar1 from 'src/assets/images/avatars/1.jpg'
 
@@ -59,6 +65,15 @@ const Dashboard = () => {
 
   return (
     <>
+      <>
+        <CRow>
+          <CCol>
+            <CCard className="mb-4">
+              <CCardHeader>Real Time Data</CCardHeader>
+            </CCard>
+          </CCol>
+        </CRow>
+      </>
       {!loaded && 'Cargando'}
       {loaded && error && 'Hubo un error'}
       {loaded && data.length > 0 && (
@@ -80,16 +95,16 @@ const Dashboard = () => {
                     {data.map((item, index) => (
                       <CTableRow v-for="item in tableItems" key={index}>
                         <CTableDataCell>
-                          <div>{item.id_equipo}</div>
+                          <div>{item.catalogo_tag_id}</div>
                         </CTableDataCell>
                         <CTableDataCell>
                           <div>{item.nombre}</div>
                         </CTableDataCell>
                         <CTableDataCell>
-                          <strong>{item.valor_recolectado}</strong>
+                          <strong>{item.nu_valor}</strong>
                         </CTableDataCell>
                         <CTableDataCell>
-                          <strong>{item.marca_de_tiempo}</strong>
+                          <strong>{item.fe_valor}</strong>
                         </CTableDataCell>
                       </CTableRow>
                     ))}
