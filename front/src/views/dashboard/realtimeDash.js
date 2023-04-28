@@ -25,7 +25,7 @@ socket.on("connect",() => {
 
 import avatar1 from 'src/assets/images/avatars/1.jpg'
 
-const Dashboard = () => {
+const realtimeDash = () => {
   const tableExample = [
     {
       avatar: { src: avatar1, status: 'success' },
@@ -45,7 +45,7 @@ const Dashboard = () => {
     },
   ]
 
-  const [data, setData] = useState([])
+  const [realTimeData, setData] = useState([])
   const [error, setError] = useState('')
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
@@ -63,51 +63,48 @@ const Dashboard = () => {
     loadAsyncStuff()
   }, [])
 
+
   return (
     <>
       {!loaded && 'Cargando'}
       {loaded && error && 'Hubo un error'}
       {loaded && data.length > 0 && (
         <CRow>
-          <CCol xs>
-            <CCard className="mb-4">
-              <CCardHeader>Analisis de Datos</CCardHeader>
-              <CCardBody>
-                <CTable align="middle" className="mb-0 border" hover responsive>
-                  <CTableHead color="light">
-                    <CTableRow>
-                      <CTableHeaderCell>ID Equipo</CTableHeaderCell>
-                      <CTableHeaderCell>Nombre</CTableHeaderCell>
-                      <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
-                      <CTableHeaderCell>Time Stamp</CTableHeaderCell>
+        <CCol>
+          <CCard className="mb-4">
+            <CCardHeader>Real Time Data</CCardHeader>
+            <CCardBody>
+              <CTable align="middle" className="mb-0 border" hover responsive>
+                <CTableHead color="light">
+                  <CTableRow>
+                    <CTableHeaderCell>ID Equipo</CTableHeaderCell>
+                    <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                    <CTableHeaderCell>Time Stamp</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  {realTimeData.map((item, index) => (
+                    <CTableRow v-for="item in tableItems" key={index}>
+                      <CTableDataCell>
+                        <div>{item.catalogo_tag_id}</div>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <strong>{item.nu_valor}</strong>
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        <strong>{item.fe_valor}</strong>
+                      </CTableDataCell>
                     </CTableRow>
-                  </CTableHead>
-                  <CTableBody>
-                    {data.map((item, index) => (
-                      <CTableRow v-for="item in tableItems" key={index}>
-                        <CTableDataCell>
-                          <div>{item.catalogo_tag_id}</div>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <div>{item.nombre}</div>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <strong>{item.nu_valor}</strong>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <strong>{item.fe_valor}</strong>
-                        </CTableDataCell>
-                      </CTableRow>
-                    ))}
-                  </CTableBody>
-                </CTable>
-              </CCardBody>
-            </CCard>
-          </CCol>
-        </CRow>
+                  ))}
+                </CTableBody>
+              </CTable>
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
       )}
     </>
   )
 }
 
-export default Dashboard
+export default realtimeDash

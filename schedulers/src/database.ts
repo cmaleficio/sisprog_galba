@@ -23,12 +23,6 @@ const isDatabaseConnected = async () => {
 };
 
 const save_data_on_database = async (data_from_scrapper: any) => {
-  /**
-   * data_from_scrapper = [
-   *  [],
-   *  []
-   * ]
-   */
   try {
     await Promise.all(
       // Use map to create an array of promises,
@@ -52,7 +46,7 @@ const save_data_on_database = async (data_from_scrapper: any) => {
           data[7],
           data[1]
         ];
-        console.log(arr);
+        console.log("Datos filtrados",arr);
 
         const res = await pool.query(
           "INSERT INTO t012_historico_tag (historico_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5)",
@@ -60,10 +54,12 @@ const save_data_on_database = async (data_from_scrapper: any) => {
         );
         
         const realData = await pool.query(
-          "INSERT INTO t011_real_tag (historico_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5) " 
-        )
-        
-        
+        //"INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5) "
+        //"UPDATE t011_ral_tag, t012_historico_tag SET t011_ral_tag_nu_valor=t012_historico_tag_nu_valor WHERE real_tag_id=historico_tag_id"
+        //"IF EXISTS (SELECT 1 FROM tabla WHERE real_tag_id = ${arr[1]) UPDATE t011_real_tag SET (nu_valor = ${arr[4]},in_calidad_dato = ${arr[6]},fe_valor= ${arr[7]} WHERE real_tag_id = ${arr[1]} ELSE INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5)",
+        "INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (real_tag_id) DO UPDATE SET nu_valor = $2, in_calidad_dato = $3, fe_valor = $4",
+        arr
+        );
       })
     );
   } catch (error) {

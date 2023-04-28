@@ -46,13 +46,13 @@ cron.schedule("*/30 * * * * *", async function () {
   console.log("---------------------");
   const data_from_scrapper = await get_information_from_scrapper();
   if (data_from_scrapper) {
-    console.log(data_from_scrapper)
+    //console.log(data_from_scrapper)
     //  save on database
     const hasConexionWithDatabase = await isDatabaseConnected();
     console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
     if (hasConexionWithDatabase) {
       console.log(`La base de datos esta conectada, hare el insert`);
-      console.log("data_from_scrapper.data", data_from_scrapper.data)
+      //console.log("data_from_scrapper.data", data_from_scrapper.data)
       save_data_on_database(data_from_scrapper.data);
     } else {
       console.log(

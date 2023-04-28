@@ -1,5 +1,5 @@
 const scraperObject = {
-  url: "http://localhost:5500/", //http://167.175.224.146/AcquisitionData.html (ip del HTML) - ip local http://127.0.0.1:5500/html/index.html
+  url: "http://167.175.224.146/AcquisitionData.html", //http://167.175.224.146/AcquisitionData.html (ip del HTML) - ip local http://127.0.0.1:5500/html/index.html
   async scraper(browser) {
     let page = await browser.newPage();
     console.log(`Navigating to ${this.url}...`);
@@ -14,7 +14,7 @@ const scraperObject = {
         .filter(
           (htmlElement) =>
             htmlElement.querySelector("tbody > tr > td > font > b > a")
-              .textContent === " Puntos Anal�gicos" //    Puntos Anal�gicos
+              .textContent === " Puntos Analógicos" //    Puntos Anal�gicos - Puntos Analógicos
         )
         .map((htmlElement) =>
           [...htmlElement.querySelectorAll("td")].map((e) =>
