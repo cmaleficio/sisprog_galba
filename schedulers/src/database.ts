@@ -34,11 +34,6 @@ const save_data_on_database = async (data_from_scrapper: any) => {
 
         //doSomethingAsync to resolve.
 
-         /*const res = await pool.query(
-          "INSERT INTO puntos_analogicos(nombre,id_equipo,device_id,tipo_de_dato,valor_recolectado,ultimo_valor_escrito,calidad,marca_de_tiempo,banda_muerta,periodo,periodo_real,tiempo_de_transferencia,tipo_de_procesamiento,lim_inf_entrada,lim_sup_entrada,lim_inf_salida,lim_sup_salida,linealizacion_entrada,entrada_m,entrada_b,linealizacion_salida,salida_m,salida_b,timeout,inhibido,direccion_entrada,direccion_salida,bloque) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28)",
-          data
-        ); */
-
         const arr = [
           data[1],
           data[4],
@@ -54,10 +49,7 @@ const save_data_on_database = async (data_from_scrapper: any) => {
         );
         
         const realData = await pool.query(
-        //"INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5) "
-        //"UPDATE t011_ral_tag, t012_historico_tag SET t011_ral_tag_nu_valor=t012_historico_tag_nu_valor WHERE real_tag_id=historico_tag_id"
-        //"IF EXISTS (SELECT 1 FROM tabla WHERE real_tag_id = ${arr[1]) UPDATE t011_real_tag SET (nu_valor = ${arr[4]},in_calidad_dato = ${arr[6]},fe_valor= ${arr[7]} WHERE real_tag_id = ${arr[1]} ELSE INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5)",
-        "INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (real_tag_id) DO UPDATE SET nu_valor = $2, in_calidad_dato = $3, fe_valor = $4",
+          "INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (real_tag_id) DO UPDATE SET nu_valor = $2, in_calidad_dato = $3, fe_valor = $4",
         arr
         );
       })

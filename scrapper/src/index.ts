@@ -2,13 +2,6 @@ import express from "express";
 import path from "path";
 const browserObject = require("./browser");
 const scraperController = require("./pageController");
-/* const io = require ('socket.io')(3001,{
-  cors: {
-      origin: [process.env.SERVERURL],
-  },
-}) */
-
-// importing routes
 
 // Initializations
 const app = express();
@@ -19,10 +12,6 @@ app.set("port", process.env.PORT || 3200);
 app.listen(app.get("port"), async () => {
   console.log("app server on port", app.get("port"));
 });
-
-/* io.on('conection', (socket: any) =>{
-  console.log(socket.id);
-}); */
 
 app.get("/results", async (req, res) => {  
   //Start the browser and create a browser instance

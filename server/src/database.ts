@@ -1,6 +1,5 @@
 require("dotenv").config();
 const { Pool, Client } = require("pg");
-import { Server, Socket } from 'socket.io'
 
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
@@ -31,16 +30,27 @@ const client = new Client({
   port: process.env.POSTGRES_PORT,
 })
 
-client.connect();
+client.connect((err: any, client: any, done: any)=>{
+  if(err){
+    console.log("Error Conectando a la DB", err);
+  } else {
+    client.on ('notification',(msg: any) => {
+      console.log(msg.payload);
+    });
+    
+    const query = client.query("LISTEN update_notification");
+  }
+});
 
-client.query('SELECT * FROM t011_real_tag ORDER BY fe_valor DESC',(err : any, res: any) =>{
+ /*  client.query('SELECT * FROM t011_real_tag ORDER BY fe_valor DESC',(err : any, res: any) =>{
   if(!err){
     console.log(res.rows);
   } else {
     console.log(err.message);
   }
-  client.end;
-})
+  client.end; 
+  }) */
+
 
 // Get Everything from DB (real_time)
 
@@ -63,7 +73,7 @@ const getRealTimeData = (request: any, response: any) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(results.rows);
+      /* response.status(200).json(results.rows); */
     }
   );
 };
