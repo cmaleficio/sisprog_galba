@@ -30,18 +30,6 @@ const client = new Client({
   port: process.env.POSTGRES_PORT,
 })
 
-client.connect((err: any, client: any, done: any)=>{
-  if(err){
-    console.log("Error Conectando a la DB", err);
-  } else {
-    client.on ('notification',(msg: any) => {
-      console.log(msg.payload);
-    });
-    
-    const query = client.query("LISTEN update_notification");
-  }
-});
-
  /*  client.query('SELECT * FROM t011_real_tag ORDER BY fe_valor DESC',(err : any, res: any) =>{
   if(!err){
     console.log(res.rows);
@@ -73,7 +61,7 @@ const getRealTimeData = (request: any, response: any) => {
       if (error) {
         throw error;
       }
-      /* response.status(200).json(results.rows); */
+      response.status(200).json(results.rows);
     }
   );
 };
