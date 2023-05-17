@@ -21,7 +21,7 @@ const Dashboard = () => {
   useEffect(() => {
     const loadAsyncStuff = async () => {
       try {
-        const response = await axios.get('http://localhost:3300/gtd')
+        const response = await axios.get('http://localhost:3300/rtd')
         setData(response.data)
       } catch (error) {
         setError(error)
@@ -41,27 +41,31 @@ const Dashboard = () => {
         <CRow>
           <CCol xs>
             <CCard className="mb-4">
-              <CCardHeader>Analisis de Datos</CCardHeader>
+              <CCardHeader>Datos</CCardHeader>
               <CCardBody>
                 <CTable align="middle" className="mb-0 border" hover responsive>
                   <CTableHead color="light">
                     <CTableRow>
                       <CTableHeaderCell>ID Equipo</CTableHeaderCell>
                       <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                      <CTableHeaderCell>Calidad del Dato</CTableHeaderCell>
                       <CTableHeaderCell>Time Stamp</CTableHeaderCell>
                     </CTableRow>
                   </CTableHead>
                   <CTableBody>
                     {data.map((item, index) => (
-                      <CTableRow v-for="item in tableItems" key={index}>
+                      <CTableRow key={index}>
                         <CTableDataCell>
                           <div>{item.real_tag_id}</div>
                         </CTableDataCell>
                         <CTableDataCell>
-                          <strong>{item.nu_valor}</strong>
+                          <div>{item.nu_valor}</div>
                         </CTableDataCell>
                         <CTableDataCell>
-                          <strong>{item.fe_valor}</strong>
+                          <div>{item.in_calidad_dato}</div>
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          <div>{item.fe_valor}</div>
                         </CTableDataCell>
                       </CTableRow>
                     ))}

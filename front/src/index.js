@@ -7,12 +7,9 @@ import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 import store from './store'
 
-const io = require('socket.io-client')
-const socket = io('http://localhost:3300/ws')
-
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <App socket={socket} />
+    <App />
   </Provider>,
 )
 

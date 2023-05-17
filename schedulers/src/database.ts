@@ -39,7 +39,7 @@ const save_data_on_database = async (data_from_scrapper: any) => {
           data[4],
           data[6],
           data[7],
-          data[1]
+          data[1],
         ];
         console.log("Datos filtrados",arr);
 
