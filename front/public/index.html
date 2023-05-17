@@ -15,11 +15,35 @@
 
   </head>
   <body>
+    
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+    <script>
+      // Reemplaza 'http://localhost:3300' con la dirección y el puerto de tu servidor
+      const socket = io('http://localhost:3300');
+
+      socket.on('connect', () => {
+        console.log('Conectado al servidor:', socket.id);
+      });
+  
+      socket.on('disconnect', () => {
+        console.log('Desconectado del servidor');
+      });
+      // Controlador de eventos para recibir los datos en tiempo real
+    socket.on('update_note', (data) => {
+      console.log('Evento de base de datos:', data);
+
+      // Aquí puedes actualizar la interfaz de usuario con los datos recibidos
+      // Por ejemplo, puedes agregar los datos a una lista o tabla
+    });
+
+    // Aquí puedes agregar eventos personalizados para el socket
+    // Por ejemplo: socket.on('miEvento', (data) => { ... });
+    </script>
     <div id="root"></div>
-    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

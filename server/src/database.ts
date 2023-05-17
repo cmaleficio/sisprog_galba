@@ -1,5 +1,8 @@
+import { response } from "express";
+import { io } from ".";
 require("dotenv").config();
 const { Pool, Client } = require("pg");
+const socket = require('socket.io');
 
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
@@ -30,19 +33,27 @@ const client = new Client({
   port: process.env.POSTGRES_PORT,
 })
 
- /*  client.query('SELECT * FROM t011_real_tag ORDER BY fe_valor DESC',(err : any, res: any) =>{
-  if(!err){
-    console.log(res.rows);
-  } else {
-    console.log(err.message);
-  }
-  client.end; 
-  }) */
-
-
 // Get Everything from DB (real_time)
+const getData = (req: any, res: any) => {
+  client.connect();
+  client.query('LISTEN update_notification', (error: any, results: any) =>{
+    if (error) {
+      throw error;
+    }
+    client.on('notification', (msg: any) => {
+      if(msg.payload){
+      const payload = JSON.parse(msg.payload);
+      console.log('Notificación recibida:', payload);
+    
+      // Envía los datos a los clientes conectados a través de Socket.io
+      io.emit('update_notification', payload);
+    }
+    });
+  });
+}
 
-const getDataFromDatabase = (request: any, response: any) => {
+
+const getHistorico = (request: any, response: any) => {
   pool.query(
     "SELECT * FROM t012_historico_tag ORDER BY fe_valor DESC",
     (error: any, results: any) => {
@@ -56,7 +67,7 @@ const getDataFromDatabase = (request: any, response: any) => {
 
 const getRealTimeData = (request: any, response: any) => {
   pool.query(
-    "SELECT * FROM t011_real_tag ORDER BY fe_valor DESC",
+    "SELECT * FROM t011_real_tag ORDER BY real_tag_id ASC",
     (error: any, results: any) => {
       if (error) {
         throw error;
@@ -66,4 +77,6 @@ const getRealTimeData = (request: any, response: any) => {
   );
 };
 
-export { isDatabaseConnected, getDataFromDatabase, getRealTimeData };
+
+
+export { isDatabaseConnected, getHistorico, getRealTimeData, getData }
