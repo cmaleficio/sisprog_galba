@@ -29,25 +29,6 @@ const pool = new Pool({
   port: process.env.POSTGRES_PORT,
 });
 
-// Get Everything from DB (real_time)
-const getData = (req: any, res: any) => {
-  pool.connect();
-  pool.query('LISTEN update_notification', (error: any, results: any) =>{
-    if (error) {
-      throw error;
-    }
-    pool.on('notification', (msg: any) => {
-      if(msg.payload){
-      const payload = JSON.parse(msg.payload);
-      console.log('Notificación recibida:', payload);
-    
-      // Envía los datos a los clientes conectados a través de Socket.io
-      io.emit('update_notification', payload);
-    }
-    });
-  });
-}
-
 // Settings
 app.set('port', process.env.PORT || 3300);
 
@@ -59,7 +40,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
-app.get('/gtd', getData);
 
 // Socket.io events
 io.on('connection', (socket) => {
