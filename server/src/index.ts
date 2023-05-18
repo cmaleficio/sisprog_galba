@@ -40,7 +40,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
-
+app.post('/grtd', (req, res) => {
+  const payload = req.body;
+  console.log('Payload recibido: ', payload);
+  // Aquí puedes hacer lo que quieras con el payload, como almacenarlo en la base de datos o enviarlo a través de un websocket.
+  res.send('OK');
+});
 // Socket.io events
 io.on('connection', (socket) => {
   console.log('Usuario conectado:', socket.id);

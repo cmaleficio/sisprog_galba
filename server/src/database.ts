@@ -1,6 +1,6 @@
-import { response } from "express";
 require("dotenv").config();
 const { Pool, Client } = require("pg");
+import axios from 'axios';
 
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
@@ -31,28 +31,18 @@ const client = new Client({
   port: process.env.POSTGRES_PORT,
 })
 
-client.connect((err: any, client: any, done: any, res: any)=>{
-  if(err){
+client.connect((err: any) => {
+  if (err) {
     console.log("Error Conectando a la DB", err);
   } else {
-    client.on ('notification',(msg: any) => {
+    client.on("notification", (msg: any) => {
       console.log(msg.payload);
+      const payload = JSON.parse(msg.payload);
     });
-    const query = client.query("LISTEN t11update");    
+    const query = client.query("LISTEN t11update");
   }
 });
 
-/* 
-const grtd = (request: any, response:any) =>{
-  client.connect((err: any, client: any, done: any, res: any)=>{
-    if(err){
-      throw err;
-    } client.on('notification', (msg: any)=>{
-      console.log(msg.payload)     
-    })
-  })
-}
- */
 const getHistorico = (request: any, response: any) => {
   pool.query(
     "SELECT * FROM t012_historico_tag ORDER BY fe_valor DESC",
