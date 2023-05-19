@@ -19,7 +19,7 @@ let isConnected = false;
  });
 
 // Controlador de eventos para recibir los datos en tiempo real
-socket.on('update_notification', (data) => {
+socket.on('t11update', (data) => {
     console.log('Evento de base de datos:', data);
 
 // Aquí puedes actualizar la interfaz de usuario con los datos recibidos

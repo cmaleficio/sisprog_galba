@@ -4,7 +4,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
 import { isDatabaseConnected, getHistorico, getRealTimeData } from './database';
-const { Pool } = require('pg');
+const { Pool, Client } = require('pg');
 
 // importing routes
 import IndexRoutes from './routes';
@@ -40,21 +40,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
-app.post('/grtd', (req, res) => {
-  const payload = req.body;
-  console.log('Payload recibido: ', payload);
-  // Aquí puedes hacer lo que quieras con el payload, como almacenarlo en la base de datos o enviarlo a través de un websocket.
-  res.send('OK');
-});
+
 // Socket.io events
 io.on('connection', (socket) => {
   console.log('Usuario conectado:', socket.id);
-
+   
   // Aquí puedes agregar eventos personalizados para el socket
   // Por ejemplo: socket.on('miEvento', (data) => { ... });
 
   socket.on('disconnect', () => {
-    console.log('Usuario desconectado:', socket.id);
+    console.log('Usuario desconectado:', socket.id); 
+  });
+
+  socket.on('error', (err) => {
+    console.log(`Error: ${err}`);
   });
 });
 
@@ -63,3 +62,5 @@ server.listen(app.get('port'), async () => {
   console.log(`conectada ${hasConexionWithDatabase}`);
   console.log('app server on port', app.get('port'));
 });
+
+export { io };
