@@ -48,7 +48,7 @@ const Charts = () => {
           <CCardBody>
             <CChartLine
               data={{
-                labels: "",
+                labels: '',
                 datasets: [
                   {
                     label: 'My First dataset',

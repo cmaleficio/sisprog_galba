@@ -1,4 +1,4 @@
- 
+/*  
  // Reemplaza 'http://localhost:3300' con la dirección y el puerto de tu servidor
  const socket = io('http://localhost:3300');
 
@@ -28,4 +28,4 @@ socket.on('t11update', (data) => {
   const newNote = document.createElement('li');
   newNote.textContent = data.note;
   noteList.appendChild(newNote);
-});
+}); */

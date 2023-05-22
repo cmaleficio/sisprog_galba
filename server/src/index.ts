@@ -43,13 +43,53 @@ app.get('/rtd', getRealTimeData);
 
 // Socket.io events
 io.on('connection', (socket) => {
-  console.log('Usuario conectado:', socket.id);
-   
-  // Aquí puedes agregar eventos personalizados para el socket
-  // Por ejemplo: socket.on('miEvento', (data) => { ... });
+  console.log('(index.ts)Usuario conectado:', socket.id);
+
+  const client = new Client({
+    user: process.env.POSTGRES_USER,
+    host: process.env.POSTGRES_HOST,
+    database: process.env.POSTGRES_DB,
+    password: process.env.POSTGRES_PASSWORD,
+    port: process.env.POSTGRES_PORT,
+  })
+
+  // Emitir un mensaje al cliente conectado
+
+  try {
+    client.connect((err: any, res: any)=>{
+      client.on("notification", (msg: any) => {
+        console.log("test ", msg.payload);
+        socket.emit('data', {
+          data: msg.payload
+        });
+      });
+      const query = client.query("LISTEN t11update");
+    })
+  } catch (error) {
+    console.log("Error Conectando a la DB", error);
+  }
+
+/*   client.connect((err: any, res: any) => {
+    if (err) {
+      console.log("Error Conectando a la DB", err);
+    } else {
+      client.on("notification", (msg: any) => {
+        console.log("test ", msg.payload);
+        socket.emit('data', {
+          data: msg.payload
+        });
+      });
+      const query = client.query("LISTEN t11update");
+    }
+  }); */
+
+  // Escuchar eventos personalizados desde el cliente
+  socket.on('notification', (data) => {
+    console.log('Evento personalizado recibido:', data);
+  });
 
   socket.on('disconnect', () => {
-    console.log('Usuario desconectado:', socket.id); 
+    console.log('Usuario desconectado:', socket.id);
   });
 
   socket.on('error', (err) => {
@@ -59,8 +99,8 @@ io.on('connection', (socket) => {
 
 server.listen(app.get('port'), async () => {
   const hasConexionWithDatabase = await isDatabaseConnected();
-  console.log(`conectada ${hasConexionWithDatabase}`);
-  console.log('app server on port', app.get('port'));
+  console.log(`Conectado a la base de datos: ${hasConexionWithDatabase}`);
+  console.log('App server on port', app.get('port'));
 });
 
 export { io };

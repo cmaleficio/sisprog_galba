@@ -3,8 +3,7 @@ async function scrapeAll(browserInstance){
 	let browser;
 	try{
 		browser = await browserInstance;
-		const data = await pageScraper.scraper(browser);
-		console.log(data)
+		const data = await pageScraper.scraper(browser);	
 		return data
 		
 	}

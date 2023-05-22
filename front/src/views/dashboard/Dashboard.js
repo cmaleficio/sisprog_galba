@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import io from 'socket.io-client'
 import {
   CCard,
@@ -21,37 +20,48 @@ const Dashboard = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState('')
   const [loaded, setLoaded] = useState(false)
-  const [socket, setSocket] = useState(null)
 
   useEffect(() => {
-    const loadAsyncStuff = async () => {
-      try {
-        /*const response = await axios.get('http://localhost:3300/rtd')
-          setData(response.data) */
+    // Establecer conexión con el socket
+    socket.on('connect', () => {
+      console.log('Conexión establecida con el servidor de socket')
+    })
 
-        // Establish socket connection
-        setSocket(socket)
+    socket.on('data', (...args) => {
+      console.log(args[0]['data'])
+      const prevData = ''
+      setData((prevData) => [...prevData, args])
+      console.log(prevData)
+    })
 
-        // Listen for incoming data
-        socket.on('connect', () => {
-          console.log('Front Conectado');
-        })
-        socket.on('data', (newData) => {
-          if (!newData) {
-            console.log('Aquí hay un problema')
-            throw error
-          } else {
-            setData((prevData) => [...prevData, newData])
-          }
-        })
-      } catch (error) {
-        setError(error)
-      } finally {
-        setLoaded(true)
+    // Escuchar eventos 'data' y actualizar los datos en tiempo real
+    /*     socket.on('notification', (newData) => {
+      if (!newData) {
+        console.log('Aquí hay un problema')
+        setError('Error al recibir los datos en tiempo real')
+      } else {
+        console.log('data', newData)
+        setData((prevData) => [...prevData, newData])
       }
+    }) */
+
+    // Manejar errores de conexión
+    socket.on('connect_error', (err) => {
+      console.log('Error de conexión con el servidor de socket:', err)
+      setError('Error de conexión con el servidor de socket')
+    })
+
+    // Limpiar los listeners del socket al desmontar el componente
+    return () => {
+      socket.off('connect')
+      socket.off('data')
+      socket.off('connect_error')
     }
-    loadAsyncStuff()
   }, [])
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [data])
 
   return (
     <>
@@ -66,10 +76,10 @@ const Dashboard = () => {
             <CTable striped>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell> ID Equipo</CTableHeaderCell>
-                  <CTableHeaderCell> Valor Recolectado</CTableHeaderCell>
-                  <CTableHeaderCell> Calidad del Dato</CTableHeaderCell>
-                  <CTableHeaderCell> Time Stamp</CTableHeaderCell>
+                  <CTableHeaderCell>ID Equipo</CTableHeaderCell>
+                  <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                  <CTableHeaderCell>Calidad del Dato</CTableHeaderCell>
+                  <CTableHeaderCell>Time Stamp</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
