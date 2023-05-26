@@ -13,10 +13,6 @@ import corsOptions from './configs/corsOptions';
 
 // Initialization
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: corsOptions
-});
 
 app.use(cors(corsOptions));
 
@@ -40,6 +36,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
+app.get('/', (req: any, res: any) =>{
+  res.json("Hola bebes")
+})
+
+const server = app.listen(app.get('port'), async () => {
+  const hasConexionWithDatabase = await isDatabaseConnected();
+  console.log(`Conectado a la base de datos: ${hasConexionWithDatabase}`);
+  console.log('App server on port', app.get('port'));
+});
+
+const io = new Server(server, {
+  cors: corsOptions
+});
 
 // Socket.io events
 io.on('connection', (socket) => {
@@ -58,36 +67,19 @@ io.on('connection', (socket) => {
   try {
     client.connect((err: any, res: any)=>{
       client.on("notification", (msg: any) => {
-        console.log("test ", msg.payload);
-        socket.emit('data', {
-          data: msg.payload
+        let data = JSON.parse(msg.payload)
+        io.emit('data', {
+          data
         });
+        console.log(data);
       });
       const query = client.query("LISTEN t11update");
     })
   } catch (error) {
     console.log("Error Conectando a la DB", error);
   }
-
-/*   client.connect((err: any, res: any) => {
-    if (err) {
-      console.log("Error Conectando a la DB", err);
-    } else {
-      client.on("notification", (msg: any) => {
-        console.log("test ", msg.payload);
-        socket.emit('data', {
-          data: msg.payload
-        });
-      });
-      const query = client.query("LISTEN t11update");
-    }
-  }); */
-
+  
   // Escuchar eventos personalizados desde el cliente
-  socket.on('notification', (data) => {
-    console.log('Evento personalizado recibido:', data);
-  });
-
   socket.on('disconnect', () => {
     console.log('Usuario desconectado:', socket.id);
   });
@@ -95,12 +87,6 @@ io.on('connection', (socket) => {
   socket.on('error', (err) => {
     console.log(`Error: ${err}`);
   });
-});
-
-server.listen(app.get('port'), async () => {
-  const hasConexionWithDatabase = await isDatabaseConnected();
-  console.log(`Conectado a la base de datos: ${hasConexionWithDatabase}`);
-  console.log('App server on port', app.get('port'));
 });
 
 export { io };

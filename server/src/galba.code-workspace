@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "../../../ver_0.5/galba"
+		},
+		{
+			"path": "../../html"
+		},
+		{
+			"path": "../../schedulers"
+		},
+		{
+			"path": "../../scrapper"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../../../GALBAWEB/sisprog-backend"
+		},
+		{
+			"path": "../../front"
+		},
+		{
+			"path": "../../client"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "html"
+	}
+}
