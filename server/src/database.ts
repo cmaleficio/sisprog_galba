@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Pool, Client } = require("pg");
 
+
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
   host: process.env.POSTGRES_HOST,
@@ -43,4 +44,16 @@ const getRealTimeData = (request: any, response: any) => {
   );
 };
 
-export { isDatabaseConnected, getHistorico, getRealTimeData };
+const getRealTimeDataForEmit = () => {
+  return pool.query(
+    "SELECT * FROM t011_real_tag ORDER BY real_tag_id ASC",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      return results.rows
+    }
+  );
+};
+
+export { isDatabaseConnected, getHistorico, getRealTimeData, pool, getRealTimeDataForEmit };

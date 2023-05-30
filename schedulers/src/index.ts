@@ -42,7 +42,7 @@ const get_information_from_scrapper = async () => {
 
 // cron
 
-cron.schedule("*/30 * * * * *", async function () {
+cron.schedule("*/10 * * * * *", async function () {
   console.log("---------------------");
   const data_from_scrapper = await get_information_from_scrapper();
   if (data_from_scrapper) {
@@ -60,6 +60,6 @@ cron.schedule("*/30 * * * * *", async function () {
       );
     }
   }
-  console.log("running a task every 30 seconds");
+  console.log("running a task every 10 seconds");
   console.log("---------------------");
 });

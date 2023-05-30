@@ -3,7 +3,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
-import { isDatabaseConnected, getHistorico, getRealTimeData } from './database';
+import { isDatabaseConnected, getHistorico, getRealTimeData, getRealTimeDataForEmit } from './database';
 const { Pool, Client } = require('pg');
 
 // importing routes
@@ -13,6 +13,10 @@ import corsOptions from './configs/corsOptions';
 
 // Initialization
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: corsOptions
+});
 
 app.use(cors(corsOptions));
 
@@ -25,6 +29,14 @@ const pool = new Pool({
   port: process.env.POSTGRES_PORT,
 });
 
+const client = new Client({
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DB,
+  password: process.env.POSTGRES_PASSWORD,
+  port: process.env.POSTGRES_PORT,
+})
+
 // Settings
 app.set('port', process.env.PORT || 3300);
 
@@ -36,50 +48,40 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
-app.get('/', (req: any, res: any) =>{
-  res.json("Hola bebes")
-})
 
-const server = app.listen(app.get('port'), async () => {
-  const hasConexionWithDatabase = await isDatabaseConnected();
-  console.log(`Conectado a la base de datos: ${hasConexionWithDatabase}`);
-  console.log('App server on port', app.get('port'));
-});
-
-const io = new Server(server, {
-  cors: corsOptions
-});
 
 // Socket.io events
 io.on('connection', (socket) => {
-  console.log('(index.ts)Usuario conectado:', socket.id);
-
-  const client = new Client({
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
-    port: process.env.POSTGRES_PORT,
-  })
+  console.log('Usuario conectado:', socket.id);
 
   // Emitir un mensaje al cliente conectado
 
-  try {
-    client.connect((err: any, res: any)=>{
-      client.on("notification", (msg: any) => {
-        let data = JSON.parse(msg.payload)
-        io.emit('data', {
-          data
-        });
-        console.log(data);
+  client.connect((err: any, res: any) => {
+    if (err) {
+      console.log("Error Conectando a la DB", err);
+    } else {
+      client.on("notification", async (msg: any) => {
+        pool.query(
+          "SELECT * FROM t011_real_tag ORDER BY real_tag_id ASC",
+          (error: any, results: any) => {
+            if (error) {
+              throw error;
+            }
+            socket.emit('data', {
+              data: results.rows
+            });
+          }
+        );
       });
       const query = client.query("LISTEN t11update");
-    })
-  } catch (error) {
-    console.log("Error Conectando a la DB", error);
-  }
-  
+    }
+  });
+
   // Escuchar eventos personalizados desde el cliente
+  socket.on('notification', (data) => {
+    console.log('Evento personalizado recibido:', data);
+  });
+
   socket.on('disconnect', () => {
     console.log('Usuario desconectado:', socket.id);
   });
@@ -87,6 +89,12 @@ io.on('connection', (socket) => {
   socket.on('error', (err) => {
     console.log(`Error: ${err}`);
   });
+});
+
+server.listen(app.get('port'), async () => {
+  const hasConexionWithDatabase = await isDatabaseConnected();
+  console.log(`Conectado a la base de datos: ${hasConexionWithDatabase}`);
+  console.log('App server on port', app.get('port'));
 });
 
 export { io };
