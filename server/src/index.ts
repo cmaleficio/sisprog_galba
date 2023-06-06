@@ -3,7 +3,7 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
-import { isDatabaseConnected, getHistorico, getRealTimeData, getRealTimeDataForEmit } from './database';
+import { isDatabaseConnected, getHistorico, getRealTimeData, getData2501 } from './database';
 const { Pool, Client } = require('pg');
 
 // importing routes
@@ -48,6 +48,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
+app.get('/sep', getData2501);
 
 
 // Socket.io events

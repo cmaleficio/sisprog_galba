@@ -5,7 +5,7 @@ import path from "path";
 const axios = require("axios");
 import { makeDatabaseBackup } from "./backup";
 
-import { isDatabaseConnected, save_data_on_database } from "./database";
+import { isDatabaseConnected, saveDataOnDatabaseHistorico, saveDataOnDatabaseReal } from "./database";
 // importing routes
 import IndexRoutes from "./routes";
 
@@ -53,13 +53,35 @@ cron.schedule("*/10 * * * * *", async function () {
     if (hasConexionWithDatabase) {
       console.log(`La base de datos esta conectada, hare el insert`);
       //console.log("data_from_scrapper.data", data_from_scrapper.data)
-      save_data_on_database(data_from_scrapper.data);
+      saveDataOnDatabaseReal(data_from_scrapper.data);
     } else {
       console.log(
         `He tenido algun problema a la hora de conectarme a la base de datos`
       );
     }
   }
-  console.log("running a task every 10 seconds");
+  console.log("Tiempo Real 10 Segundos");
   console.log("---------------------");
+});
+
+cron.schedule("5 * * * * *", async function () {
+  console.log("---------------------");
+  const data_from_scrapper = await get_information_from_scrapper();
+  if (data_from_scrapper) {
+    //console.log(data_from_scrapper)
+    //  save on database
+    const hasConexionWithDatabase = await isDatabaseConnected();
+    console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
+    if (hasConexionWithDatabase) {
+      console.log(`La base de datos esta conectada, hare el insert`);
+      //console.log("data_from_scrapper.data", data_from_scrapper.data)
+      saveDataOnDatabaseHistorico(data_from_scrapper.data);
+    } else {
+      console.log(
+        `He tenido algun problema a la hora de conectarme a la base de datos`
+      );
+    }
+  }
+  console.log("Database Historico 5 Min");
+  console.log("+++++++++++++++++++++");
 });

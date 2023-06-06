@@ -56,4 +56,17 @@ const getRealTimeDataForEmit = () => {
   );
 };
 
-export { isDatabaseConnected, getHistorico, getRealTimeData, pool, getRealTimeDataForEmit };
+const getData2501 = () => {
+  return pool.query(
+    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t011_real_tag WHERE real_tag_id in (36554433, 36554434, 36554435, 36554436, 36554437, 36554438)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      console.log(results.rows)
+      return results.rows
+    }
+  );
+};
+
+export { isDatabaseConnected, getHistorico, getRealTimeData, pool, getRealTimeDataForEmit, getData2501 };
