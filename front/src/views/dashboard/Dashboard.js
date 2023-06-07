@@ -13,8 +13,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CCardImage,
 } from '@coreui/react'
-
+import ReactImg from 'src/assets/images/react.jpg'
 const socket = io('http://localhost:3300')
 
 const Dashboard = () => {
@@ -25,7 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     const loadAsyncStuff = async () => {
       try {
-        const response = await axios.get('http://localhost:3300/rtd')
+        const response = await axios.get('http://localhost:3300/sp2501')
         setData(response.data)
       } catch (error) {
         setError(error)
@@ -75,33 +76,40 @@ const Dashboard = () => {
       {!loaded && 'Cargando'}
       {loaded && error && 'Hubo un error'}
       {loaded && data.length > 0 && (
-        <CCard>
-          <CCardHeader>
-            <h3>Datos en tiempo real</h3>
-          </CCardHeader>
-          <CCardBody>
-            <CTable striped>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell>ID Equipo</CTableHeaderCell>
-                  <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
-                  <CTableHeaderCell>Calidad del Dato</CTableHeaderCell>
-                  <CTableHeaderCell>Time Stamp</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {data.map((item, index) => (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{item.real_tag_id}</CTableDataCell>
-                    <CTableDataCell>{item.nu_valor}</CTableDataCell>
-                    <CTableDataCell>{item.in_calidad_dato}</CTableDataCell>
-                    <CTableDataCell>{item.fe_valor}</CTableDataCell>
-                  </CTableRow>
-                ))}
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
+        <CRow>
+          <CCol>
+            <CCard>
+              <CCardHeader>
+                <h3>Separador 2501 EPT-1</h3>
+              </CCardHeader>
+              <CCardBody>
+                <CCardImage orientation="top" src={ReactImg} />
+                <CTable aling="middle" color="dark" striped hover responsive>
+                  <CTableHead>
+                    <CTableRow>
+                      <CTableHeaderCell>Nombre Equipo</CTableHeaderCell>
+                      <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                      <CTableHeaderCell>Calidad del Dato</CTableHeaderCell>
+                      <CTableHeaderCell>Time Stamp</CTableHeaderCell>
+                    </CTableRow>
+                  </CTableHead>
+                  <CTableBody>
+                    {data.map((item, index) => (
+                      <>
+                        <CTableRow key={index}>
+                          <CTableDataCell>{item.disp_nombre}</CTableDataCell>
+                          <CTableDataCell>{item.nu_valor}</CTableDataCell>
+                          <CTableDataCell>{item.in_calidad_dato}</CTableDataCell>
+                          <CTableDataCell>{item.fe_valor}</CTableDataCell>
+                        </CTableRow>
+                      </>
+                    ))}
+                  </CTableBody>
+                </CTable>
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CRow>
       )}
     </>
   )

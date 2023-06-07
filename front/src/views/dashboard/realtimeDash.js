@@ -16,12 +16,6 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cibCcMastercard, cifUs, cilPeople } from '@coreui/icons'
-/* import {io} from 'socket.io-client';
-
-const socket = io ('http://localhost:3001')
-socket.on("connect",() => {
-    displayMessage(`Estas conectado with id: ${socket.id}`)
-}) */
 
 import avatar1 from 'src/assets/images/avatars/1.jpg'
 
@@ -51,7 +45,7 @@ const realtimeDash = () => {
   useEffect(() => {
     const loadAsyncStuff = async () => {
       try {
-        const response = await axios.get('http://localhost:3300/results')
+        const response = await axios.get('http://localhost:3300/rtd')
         setData(response.data)
       } catch (error) {
         setError(error)

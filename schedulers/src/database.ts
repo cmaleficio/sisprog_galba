@@ -40,11 +40,12 @@ const saveDataOnDatabaseReal = async (data_from_scrapper: any) => {
           data[6],
           data[7],
           data[1],
+          data[0],
         ];
         console.log("Datos filtrados",arr);
     
         const realData = await pool.query(
-          "INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (real_tag_id) DO UPDATE SET nu_valor = $2, in_calidad_dato = $3, fe_valor = $4",
+          "INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id,disp_nombre) VALUES ($1,$2,$3,$4,$5,$6) ON CONFLICT (real_tag_id) DO UPDATE SET nu_valor = $2, in_calidad_dato = $3, fe_valor = $4, disp_nombre= $6",
         arr
         );
       })
@@ -79,11 +80,6 @@ const saveDataOnDatabaseHistorico = async (data_from_scrapper: any) => {
         const res = await pool.query(
           "INSERT INTO t012_historico_tag (historico_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5)",
           arr
-        );
-        
-        const realData = await pool.query(
-          "INSERT INTO t011_real_tag (real_tag_id,nu_valor,in_calidad_dato,fe_valor,catalogo_tag_id) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (real_tag_id) DO UPDATE SET nu_valor = $2, in_calidad_dato = $3, fe_valor = $4",
-        arr
         );
       })
     );

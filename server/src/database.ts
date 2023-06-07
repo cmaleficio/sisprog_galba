@@ -44,7 +44,7 @@ const getRealTimeData = (request: any, response: any) => {
   );
 };
 
-const getRealTimeDataForEmit = () => {
+/* const getRealTimeDataForEmit = () => {
   return pool.query(
     "SELECT * FROM t011_real_tag ORDER BY real_tag_id ASC",
     (error: any, results: any) => {
@@ -54,19 +54,31 @@ const getRealTimeDataForEmit = () => {
       return results.rows
     }
   );
-};
+}; */
 
-const getData2501 = () => {
+const getData2501 = (request: any, response: any) => {
   return pool.query(
-    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t011_real_tag WHERE real_tag_id in (36554433, 36554434, 36554435, 36554436, 36554437, 36554438)",
+    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id, disp_nombre FROM t011_real_tag WHERE real_tag_id in (36554433, 36554434, 36554435, 36554436, 36554437, 36554438)",
     (error: any, results: any) => {
       if (error) {
         throw error;
       }
-      console.log(results.rows)
-      return results.rows
+      response.status(200).json(results.rows)
     }
   );
 };
 
-export { isDatabaseConnected, getHistorico, getRealTimeData, pool, getRealTimeDataForEmit, getData2501 };
+const getDataTk2000 = (request: any, response: any) => {
+  return pool.query(
+    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id, disp_nombre FROM t011_real_tag WHERE real_tag_id in (36554443, 36554444, 36554445, 36554446, 36554447)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+
+
+export { isDatabaseConnected, getHistorico, getRealTimeData, pool, getData2501, getDataTk2000 };
