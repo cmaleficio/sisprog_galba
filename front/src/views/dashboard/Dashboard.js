@@ -80,7 +80,7 @@ const Dashboard = () => {
           <CCol>
             <CCard>
               <CCardHeader>
-                <h3>Separador 2501 EPT-1</h3>
+                <h3>Separador 2501 EPT</h3>
               </CCardHeader>
               <CCardBody>
                 <CCardImage orientation="top" src={ReactImg} />

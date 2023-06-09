@@ -80,5 +80,79 @@ const getDataTk2000 = (request: any, response: any) => {
   );
 };
 
+// Consultas Por dispositivo para grafico SEP-2501
 
-export { isDatabaseConnected, getHistorico, getRealTimeData, pool, getData2501, getDataTk2000 };
+
+const LIT_250130 = (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554433)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+
+const LIT_250110 = (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554434)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+
+const FIT_250130 = (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554435)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+
+const FIT_250110 = (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554436)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+
+const TIT_250110 = (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554437)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+
+const PIT_250110 = (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554438)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+
+export { isDatabaseConnected, getHistorico, getRealTimeData, pool, getData2501, getDataTk2000, LIT_250130, LIT_250110, FIT_250130, FIT_250110, TIT_250110, PIT_250110 };

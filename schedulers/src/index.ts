@@ -61,11 +61,10 @@ cron.schedule("*/10 * * * * *", async function () {
     }
   }
   console.log("Tiempo Real 10 Segundos");
-  console.log("---------------------");
 });
 
 cron.schedule("5 * * * * *", async function () {
-  console.log("---------------------");
+  console.log("++++++++++++++++++++");
   const data_from_scrapper = await get_information_from_scrapper();
   if (data_from_scrapper) {
     //console.log(data_from_scrapper)
@@ -83,5 +82,4 @@ cron.schedule("5 * * * * *", async function () {
     }
   }
   console.log("Database Historico 5 Min");
-  console.log("+++++++++++++++++++++");
 });
