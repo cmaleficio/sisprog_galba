@@ -1,5 +1,5 @@
 const scraperObject = {
-  url: "http://167.175.224.135/AcquisitionData.html", //http://167.175.224.146/AcquisitionData.html (ip del HTML) - ip local http://127.0.0.1:5500/html/index.html
+  url: "http://127.0.0.1:5500/",
   async scraper(browser) {
     let page = await browser.newPage();
     console.log(`Navigating to ${this.url}...`);
@@ -14,7 +14,7 @@ const scraperObject = {
         .filter(
           (htmlElement) =>
             htmlElement.querySelector("tbody > tr > td > font > b > a")
-              .textContent === " Puntos Analógicos" // Puntos Analógicos (con la ip interna de pdvsa) - Puntos Anal�gicos (con el HTML) - Necesita llevar un espacio vacio antes del nombre de la tabla.
+              .textContent === " Puntos Anal�gicos" //
         )
         .map((htmlElement) =>
           [...htmlElement.querySelectorAll("td")].map((e) =>
@@ -22,7 +22,6 @@ const scraperObject = {
           )
         );
     });
-
 
     await browser.close();
 
