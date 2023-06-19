@@ -8,7 +8,7 @@ const scraperController = require("./pageController");
 const app = express();
 
 // Settings
-app.set("port", process.env.PORT || 3200);
+app.set("port", process.env.PORT || 3201);
 
 app.listen(app.get("port"), async () => {
   console.log("app server on port", app.get("port"));
@@ -45,10 +45,10 @@ app.get("/results", async (req, res) => {
 
 const filteredData = (data: Array<any>) => {
   const new_data: any = [];
-  let rowLength = 28;
-  let row = 28;
+  let rowLength = 24;
+  let row = 24;
   let minIndex = 1;
-  let maxIndex = 28;
+  let maxIndex = 24;
   let group: any = []
 
   data?.forEach((value, index) => {

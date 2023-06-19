@@ -1,5 +1,5 @@
 const scraperObject = {
-  url: "http://167.175.224.135/AcquisitionData.html",
+  url: "http://167.175.224.135/AcquisitionData.html", // http://167.175.224.135/AcquisitionData.html
   async scraper(browser) {
     let page = await browser.newPage();
     console.log(`Navigating to ${this.url}...`);
@@ -14,7 +14,7 @@ const scraperObject = {
         .filter(
           (htmlElement) =>
             htmlElement.querySelector("tbody > tr > td > font > b > a")
-              .textContent === " Puntos Analógicos" //
+              .textContent === " Puntos Digitales" //
         )
         .map((htmlElement) =>
           [...htmlElement.querySelectorAll("td")].map((e) =>

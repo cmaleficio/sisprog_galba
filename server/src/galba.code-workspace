@@ -23,9 +23,14 @@
 		},
 		{
 			"path": "../../client"
+		},
+		{
+			"path": "../../scrapper2"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "html"
+		"liveServer.settings.multiRootWorkspaceName": "html",
+		"CodeGPT.model": "text-davinci-003",
+		"CodeGPT.temperature": 0.4
 	}
 }
