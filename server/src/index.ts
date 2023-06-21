@@ -3,7 +3,11 @@ import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
-import { isDatabaseConnected, getHistorico, getRealTimeData, getData2501, getDataTk2000, LIT_250130, LIT_250110, FIT_250110,FIT_250130,TIT_250110,PIT_250110 } from './database';
+import { isDatabaseConnected, 
+  getHistorico, 
+  getRealTimeData, 
+  getAnalogV_2601,
+  getDigitalV_2601} from './database';
 const { Pool, Client } = require('pg');
 
 // importing routes
@@ -49,19 +53,9 @@ app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
 
-// Puntos de datos Tanque 2000
-app.get('/tk2000', getDataTk2000);
-
-//Puntos de datos SEP 2501
-app.get('/sp2501', getData2501);
-app.get('/lit250130', LIT_250130);
-app.get('/lit250110', LIT_250110);
-app.get('/fit250130', FIT_250130);
-app.get('/fit250110', FIT_250110);
-app.get('/tit250110', TIT_250110);
-app.get('/pit250110', PIT_250110);
-
-
+// DATA V_2601
+app.get('/V_2601a', getAnalogV_2601)
+app.get('/V_2601d', getDigitalV_2601)
 
 // Socket.io events
 io.on('connection', (socket) => {

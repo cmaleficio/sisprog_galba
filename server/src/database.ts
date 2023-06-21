@@ -56,9 +56,9 @@ const getRealTimeData = (request: any, response: any) => {
   );
 }; */
 
-const getData2501 = (request: any, response: any) => {
+const getAnalogV_2601 = (request: any, response: any) => {
   return pool.query(
-    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id, disp_nombre FROM t011_real_tag WHERE real_tag_id in (36554433, 36554434, 36554435, 36554436, 36554437, 36554438)",
+    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id, disp_nombre FROM t011_real_tag WHERE real_tag_id in (36554736, 36554737, 36554738, 36554739, 36554740, 36554741, 36554742, 36554743, 36554744, 36554745, 36554746, 36554747, 36554748, 36554749)",
     (error: any, results: any) => {
       if (error) {
         throw error;
@@ -68,9 +68,9 @@ const getData2501 = (request: any, response: any) => {
   );
 };
 
-const getDataTk2000 = (request: any, response: any) => {
+const getDigitalV_2601 = (request: any, response: any) => {
   return pool.query(
-    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id, disp_nombre FROM t011_real_tag WHERE real_tag_id in (36554443, 36554444, 36554445, 36554446, 36554447)",
+    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id, disp_nombre FROM t011_real_tag WHERE real_tag_id in (36554453, 36554454, 36554455, 36554456, 36554457, 36554458, 36554459, 36554460, 36554461, 36554462, 36554463, 36554464, 36554465, 36554466, 36554467, 36554468, 36554469, 36554470, 36554471, 36554472, 36554473, 36554474, 36554475, 36554476)",
     (error: any, results: any) => {
       if (error) {
         throw error;
@@ -80,79 +80,17 @@ const getDataTk2000 = (request: any, response: any) => {
   );
 };
 
-// Consultas Por dispositivo para grafico SEP-2501
+// Peticiones por despligues/Dispositivos
+
+// V_2601
 
 
-const LIT_250130 = (request: any, response: any) => {
-  return pool.query(
-    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554433)",
-    (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows)
-    }
-  );
+export { 
+  isDatabaseConnected,
+  getHistorico, 
+  getRealTimeData, 
+  pool,
+  getAnalogV_2601,
+  getDigitalV_2601,
+  
 };
-
-const LIT_250110 = (request: any, response: any) => {
-  return pool.query(
-    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554434)",
-    (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows)
-    }
-  );
-};
-
-const FIT_250130 = (request: any, response: any) => {
-  return pool.query(
-    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554435)",
-    (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows)
-    }
-  );
-};
-
-const FIT_250110 = (request: any, response: any) => {
-  return pool.query(
-    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554436)",
-    (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows)
-    }
-  );
-};
-
-const TIT_250110 = (request: any, response: any) => {
-  return pool.query(
-    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554437)",
-    (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows)
-    }
-  );
-};
-
-const PIT_250110 = (request: any, response: any) => {
-  return pool.query(
-    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554438)",
-    (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows)
-    }
-  );
-};
-
-export { isDatabaseConnected, getHistorico, getRealTimeData, pool, getData2501, getDataTk2000, LIT_250130, LIT_250110, FIT_250130, FIT_250110, TIT_250110, PIT_250110 };

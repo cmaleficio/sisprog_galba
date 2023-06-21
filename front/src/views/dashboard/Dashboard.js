@@ -15,7 +15,7 @@ import {
   CTableRow,
   CCardImage,
 } from '@coreui/react'
-import ReactImg from 'src/assets/images/react.jpg'
+import ReactImg from 'src/assets/images/V_2501.PNG'
 const socket = io('http://localhost:3300')
 
 const Dashboard = () => {
@@ -26,7 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     const loadAsyncStuff = async () => {
       try {
-        const response = await axios.get('http://localhost:3300/sp2501')
+        const response = await axios.get('http://localhost:3300/V_2601a')
         setData(response.data)
       } catch (error) {
         setError(error)
@@ -80,7 +80,7 @@ const Dashboard = () => {
           <CCol>
             <CCard>
               <CCardHeader>
-                <h3>Separador 2501 EPT</h3>
+                <h3></h3>
               </CCardHeader>
               <CCardBody>
                 <CCardImage orientation="top" src={ReactImg} />
@@ -96,7 +96,7 @@ const Dashboard = () => {
                   <CTableBody>
                     {data.map((item, index) => (
                       <>
-                        <CTableRow key={index}>
+                        <CTableRow key={item.disp_nombre}>
                           <CTableDataCell>{item.disp_nombre}</CTableDataCell>
                           <CTableDataCell>{item.nu_valor}</CTableDataCell>
                           <CTableDataCell>{item.in_calidad_dato}</CTableDataCell>
