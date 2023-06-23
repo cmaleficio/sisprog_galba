@@ -6,8 +6,7 @@ import path from 'path';
 import { isDatabaseConnected, 
   getHistorico, 
   getRealTimeData, 
-  getAnalogV_2601,
-  getDigitalV_2601} from './database';
+  getAnalogV_2501,} from './database';
 const { Pool, Client } = require('pg');
 
 // importing routes
@@ -54,8 +53,8 @@ app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
 
 // DATA V_2601
-app.get('/V_2601a', getAnalogV_2601)
-app.get('/V_2601d', getDigitalV_2601)
+app.get('/V_2501a', getAnalogV_2501)
+/* app.get('/V_2501d', getDigitalV_2501) */
 
 // Socket.io events
 io.on('connection', (socket) => {
@@ -63,7 +62,7 @@ io.on('connection', (socket) => {
 
   // Emitir un mensaje al cliente conectado
 
-  client.connect((err: any, res: any) => {
+  pool.connect((err: any, res: any) => {
     if (err) {
       console.log("Error Conectando a la DB", err);
     } else {

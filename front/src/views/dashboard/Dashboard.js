@@ -26,7 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     const loadAsyncStuff = async () => {
       try {
-        const response = await axios.get('http://localhost:3300/V_2601a')
+        const response = await axios.get('http://localhost:3300/V_2501a')
         setData(response.data)
       } catch (error) {
         setError(error)

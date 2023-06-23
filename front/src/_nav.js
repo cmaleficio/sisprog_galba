@@ -22,7 +22,37 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'EPT - 1 ',
+    name: 'TY_23',
+    to: '/base/placeholders',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'V_2501',
+        to: '/Dashboard',
+        icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+        badge: {
+          color: 'info',
+          text: 'NEW',
+        },
+      },
+      {
+        component: CNavItem,
+        name: 'TK_20006',
+        to: '/Dashboard',
+      },
+      {
+        component: CNavItem,
+        name: 'Gráficas',
+        to: '/charts',
+        icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+      },
+    ],
+  },
+
+  {
+    component: CNavGroup,
+    name: 'TY_8',
     to: '/base/placeholders',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
     items: [
