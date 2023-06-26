@@ -6,7 +6,10 @@ import path from 'path';
 import { isDatabaseConnected, 
   getHistorico, 
   getRealTimeData, 
-  getAnalogV_2501,} from './database';
+  getAnalogV_2501,
+  getTIT_250110_P,
+  getTIT_250110_A,
+  getTIT_250110,} from './database';
 const { Pool, Client } = require('pg');
 
 // importing routes
@@ -52,9 +55,16 @@ app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
 
-// DATA V_2601
+// DATA V_2501
 app.get('/V_2501a', getAnalogV_2501)
 /* app.get('/V_2501d', getDigitalV_2501) */
+
+
+  //2501 Instrumentos
+  app.get('/TIT_V2501_P', getTIT_250110_P)
+  app.get('/TIT_V2501_A', getTIT_250110_A)
+  app.get('/TIT_V2501', getTIT_250110)
+  
 
 // Socket.io events
 io.on('connection', (socket) => {

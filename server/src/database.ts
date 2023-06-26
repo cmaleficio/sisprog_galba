@@ -84,7 +84,7 @@ const getDigitalV_2601 = (request: any, response: any) => {
   );
 };
 
-// V_2501 (IMPORTANT
+// V_2501 (IMPORTANT)
 const getAnalogV_2501 = (request: any, response: any) => {
   return pool.query(
     "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id, disp_nombre FROM t011_real_tag WHERE real_tag_id in (36554750, 36554751, 36554752, 36554754, 36554755, 36554756, 36554765, 36554766, 36554767, 36554768, 36554769, 36554770, 36554778, 36554802, 36554803,	36554804,	36554806,	36554807, 36554808, 36554753,	36554757, 36554758, 36554759)",
@@ -109,6 +109,46 @@ const getAnalogV_2501 = (request: any, response: any) => {
   );
 }; */
 
+// V_2501 Presiones y Temperaturas(Incluye Promedios-Anteriores-y Actual)
+
+const getTIT_250110_P= (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554750)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+const getTIT_250110_A= (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554751)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+const getTIT_250110= (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554752)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+
+
+
+// V_2501 Niveles y Flujo
+
 
 //TK_20006 (IMPORTANTE)
 
@@ -119,5 +159,7 @@ export {
   getRealTimeData, 
   pool,
   getAnalogV_2501,
-  
+  getTIT_250110_P,
+  getTIT_250110_A,
+  getTIT_250110
 };

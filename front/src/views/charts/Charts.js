@@ -9,7 +9,7 @@ const Charts = () => {
     labels: [],
     datasets: [
       {
-        label: 'Separador 2501 - 1',
+        label: 'Separador 2501 - PRESIONES Y TEMPERATURAS',
         data: [],
         backgroundColor: ['rgba(75,192,192,1)', '#ecf0f1', '#50AF95', '#f3ba2f', '#2a71d0'],
         borderColor: 'black',
@@ -21,7 +21,7 @@ const Charts = () => {
     labels: [],
     datasets: [
       {
-        label: 'Separador 2501 - 2',
+        label: 'Separador 2501 - FLUJO Y NIVELES',
         data: [],
         backgroundColor: ['rgba(75,192,192,1)', '#ecf0f1', '#50AF95', '#f3ba2f', '#2a71d0'],
         borderColor: 'black',
@@ -32,48 +32,38 @@ const Charts = () => {
 
   const loadAsyncStuff = async () => {
     try {
-      const response = await axios.get('http://localhost:3300/lit250130')
-      const response2 = await axios.get('http://localhost:3300/lit250110')
-      const response3 = await axios.get('http://localhost:3300/fit250130')
-      const response4 = await axios.get('http://localhost:3300/fit250110')
-      const response5 = await axios.get('http://localhost:3300/tit250110')
-      const response6 = await axios.get('http://localhost:3300/pit250110')
+      const response = await axios.get('http://localhost:3300/TIT_V2501_P')
+      const response2 = await axios.get('http://localhost:3300/TIT_V2501_A')
+      const response3 = await axios.get('http://localhost:3300/TIT_V2501')
 
       setData({
         labels: response.data.map((chart) => chart.fe_valor),
         datasets: [
           {
-            label: 'Transmisor de nivel ALTO',
+            label: 'TIT_V2501 Periodo Actual',
             data: response.data.map((chart) => chart.nu_valor),
             backgroundColor: ['#ecf0f1'],
             borderColor: 'black',
             borderWidth: 1,
           },
           {
-            label: 'Transmisor de nivel BAJO',
+            label: 'TIT_V2501 Periodo Anterior',
             data: response2.data.map((chart) => chart.nu_valor),
             backgroundColor: ['#2a71d0'],
             borderColor: 'black',
             borderWidth: 1,
           },
           {
-            label: 'Indicador de temperatura',
-            data: response5.data.map((chart) => chart.nu_valor),
+            label: 'TIT_V2501 Instantaneo',
+            data: response3.data.map((chart) => chart.nu_valor),
             backgroundColor: ['lightblue'],
-            borderColor: 'black',
-            borderWidth: 1,
-          },
-          {
-            label: 'Indicador de presion',
-            data: response6.data.map((chart) => chart.nu_valor),
-            backgroundColor: ['orange'],
             borderColor: 'black',
             borderWidth: 1,
           },
         ],
       })
 
-      setChart({
+      /*setChart({
         labels: response.data.map((chart) => chart.fe_valor),
         datasets: [
           {
@@ -91,7 +81,7 @@ const Charts = () => {
             borderWidth: 1,
           },
         ],
-      })
+      }) */
     } catch (err) {
       throw err
     }
