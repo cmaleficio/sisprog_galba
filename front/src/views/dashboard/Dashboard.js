@@ -22,16 +22,23 @@ const Dashboard = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState('')
   const [loaded, setLoaded] = useState(false)
+  const [data2, setData2] = useState([])
+  const [error2, setError2] = useState('')
+  const [loaded2, setLoaded2] = useState(false)
 
   useEffect(() => {
     const loadAsyncStuff = async () => {
       try {
         const response = await axios.get('http://localhost:3300/V_2501a')
         setData(response.data)
+        const response2 = await axios.get('http://localhost:3300/V_2501a')
+        setData2(response2.data)
       } catch (error) {
         setError(error)
+        setError2(error)
       } finally {
         setLoaded(true)
+        setLoaded2(true)
       }
     }
 
@@ -80,10 +87,61 @@ const Dashboard = () => {
           <CCol>
             <CCard>
               <CCardHeader>
-                <h3></h3>
+                <h3>Separador V_2501</h3>
               </CCardHeader>
               <CCardBody>
                 <CCardImage orientation="top" src={ReactImg} />
+                <h2>Entrada de Liquido</h2>
+                <CTable aling="middle" color="dark" striped hover responsive>
+                  <CTableHead>
+                    <CTableRow>
+                      <CTableHeaderCell>Nombre Equipo</CTableHeaderCell>
+                      <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                      <CTableHeaderCell>Calidad del Dato</CTableHeaderCell>
+                      <CTableHeaderCell>Time Stamp</CTableHeaderCell>
+                    </CTableRow>
+                  </CTableHead>
+                  <CTableBody>
+                    {data.map((item, index) => (
+                      <>
+                        <CTableRow key={item.disp_nombre}>
+                          <CTableDataCell>{item.disp_nombre}</CTableDataCell>
+                          <CTableDataCell>{item.nu_valor}</CTableDataCell>
+                          <CTableDataCell>{item.in_calidad_dato}</CTableDataCell>
+                          <CTableDataCell>{item.fe_valor}</CTableDataCell>
+                        </CTableRow>
+                      </>
+                    ))}
+                  </CTableBody>
+                </CTable>
+              </CCardBody>
+              <CCardBody>
+                <h2>Sistema de Control de Presión</h2>
+                <CTable aling="middle" color="dark" striped hover responsive>
+                  <CTableHead>
+                    <CTableRow>
+                      <CTableHeaderCell>Nombre Equipo</CTableHeaderCell>
+                      <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                      <CTableHeaderCell>Calidad del Dato</CTableHeaderCell>
+                      <CTableHeaderCell>Time Stamp</CTableHeaderCell>
+                    </CTableRow>
+                  </CTableHead>
+                  <CTableBody>
+                    {data.map((item, index) => (
+                      <>
+                        <CTableRow key={item.disp_nombre}>
+                          <CTableDataCell>{item.disp_nombre}</CTableDataCell>
+                          <CTableDataCell>{item.nu_valor}</CTableDataCell>
+                          <CTableDataCell>{item.in_calidad_dato}</CTableDataCell>
+                          <CTableDataCell>{item.fe_valor}</CTableDataCell>
+                        </CTableRow>
+                      </>
+                    ))}
+                  </CTableBody>
+                </CTable>
+              </CCardBody>
+              <CCardBody>
+                <h2>Salida de Líquido</h2>
                 <CTable aling="middle" color="dark" striped hover responsive>
                   <CTableHead>
                     <CTableRow>

@@ -9,7 +9,11 @@ import { isDatabaseConnected,
   getAnalogV_2501,
   getTIT_250110_P,
   getTIT_250110_A,
-  getTIT_250110,} from './database';
+  getTIT_250110,
+  getPIT_250110_P,
+  getPIT_250110_A,
+  getPIT_250110,
+  getPIT_250120} from './database';
 const { Pool, Client } = require('pg');
 
 // importing routes
@@ -61,9 +65,13 @@ app.get('/V_2501a', getAnalogV_2501)
 
 
   //2501 Instrumentos
-  app.get('/TIT_V2501_P', getTIT_250110_P)
-  app.get('/TIT_V2501_A', getTIT_250110_A)
-  app.get('/TIT_V2501', getTIT_250110)
+  app.get('/TIT_25010_P_V2501', getTIT_250110_P)
+  app.get('/TIT_25010_A_V2501', getTIT_250110_A)
+  app.get('/TIT_25010_V2501', getTIT_250110)
+  app.get('/PIT_25010_P_V2501', getPIT_250110_P)
+  app.get('/PIT_25010_A_V2501', getPIT_250110_A)
+  app.get('/PIT_25010_V2501', getPIT_250110)
+  app.get('/PIT_250120_V2501', getPIT_250120)
   
 
 // Socket.io events
