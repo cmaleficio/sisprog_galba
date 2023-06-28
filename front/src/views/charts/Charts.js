@@ -38,7 +38,7 @@ const Charts = () => {
       const response4 = await axios.get('http://localhost:3300/PIT_25010_P_V2501')
       const response5 = await axios.get('http://localhost:3300/PIT_25010_A_V2501')
       const response6 = await axios.get('http://localhost:3300/PIT_25010_A_V2501')
-      const response7 = await axios.get('http://localhost:3300/PIT_25020_V2501')
+      const response7 = await axios.get('http://localhost:3300/PIT_25030_V2501')
 
       setData({
         labels: response.data.map((chart) => chart.fe_valor),

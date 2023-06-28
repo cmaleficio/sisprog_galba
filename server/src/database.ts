@@ -188,6 +188,28 @@ const getPIT_250120= (request: any, response: any) => {
     }
   );
 };
+const getLIT_250130= (request: any, response: any) => {
+  return pool.query(
+    "SELECT real_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t011_real_tag WHERE real_tag_id in (36554767)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
+const getH_LIT_250130= (request: any, response: any) => {
+  return pool.query(
+    "SELECT historico_tag_id, nu_valor, in_calidad_dato, fe_valor, catalogo_tag_id FROM t012_historico_tag WHERE historico_tag_id in (36554767)",
+    (error: any, results: any) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).json(results.rows)
+    }
+  );
+};
 
 
 
@@ -209,5 +231,7 @@ export {
   getPIT_250110_P,
   getPIT_250110_A,
   getPIT_250110,
-  getPIT_250120
+  getPIT_250120,
+  getLIT_250130,
+  getH_LIT_250130,
 };

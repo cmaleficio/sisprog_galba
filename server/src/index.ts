@@ -13,7 +13,9 @@ import { isDatabaseConnected,
   getPIT_250110_P,
   getPIT_250110_A,
   getPIT_250110,
-  getPIT_250120} from './database';
+  getPIT_250120,
+  getLIT_250130,
+  getH_LIT_250130} from './database';
 const { Pool, Client } = require('pg');
 
 // importing routes
@@ -72,6 +74,8 @@ app.get('/V_2501a', getAnalogV_2501)
   app.get('/PIT_25010_A_V2501', getPIT_250110_A)
   app.get('/PIT_25010_V2501', getPIT_250110)
   app.get('/PIT_250120_V2501', getPIT_250120)
+  app.get('/LIT_250130_V2501', getLIT_250130)
+  app.get('/H_LIT_250130_V2501', getH_LIT_250130)
   
 
 // Socket.io events

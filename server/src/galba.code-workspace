@@ -28,6 +28,7 @@
 	"settings": {
 		"liveServer.settings.multiRootWorkspaceName": "html",
 		"CodeGPT.model": "text-davinci-003",
-		"CodeGPT.temperature": 0.4
+		"CodeGPT.temperature": 0.4,
+		"vs-code-prettier-eslint.prettierLast": true
 	}
 }
