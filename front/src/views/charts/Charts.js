@@ -32,65 +32,17 @@ const Charts = () => {
 
   const loadAsyncStuff = async () => {
     try {
-      const response = await axios.get('http://localhost:3300/TIT_25010_P_V2501')
-      const response2 = await axios.get('http://localhost:3300/TIT_25010_A_V2501')
-      const response3 = await axios.get('http://localhost:3300/TIT_25010_V2501')
-      const response4 = await axios.get('http://localhost:3300/PIT_25010_P_V2501')
-      const response5 = await axios.get('http://localhost:3300/PIT_25010_A_V2501')
-      const response6 = await axios.get('http://localhost:3300/PIT_25010_A_V2501')
-      const response7 = await axios.get('http://localhost:3300/PIT_25030_V2501')
+      const response = await axios.get('http://localhost:3300/lit250130_ht')
 
       setData({
         labels: response.data.map((chart) => chart.fe_valor),
         datasets: [
           {
-            label: 'TIT_25010_P',
+            label: 'LIT_250130',
             data: response.data.map((chart) => chart.nu_valor),
             backgroundColor: ['#ecf0f1'],
             borderColor: 'black',
-            borderWidth: 1,
-          },
-          {
-            label: 'TIT_25010_A',
-            data: response2.data.map((chart) => chart.nu_valor),
-            backgroundColor: ['#2a71d0'],
-            borderColor: 'black',
-            borderWidth: 1,
-          },
-          {
-            label: 'TIT_25010',
-            data: response3.data.map((chart) => chart.nu_valor),
-            backgroundColor: ['lightblue'],
-            borderColor: 'black',
-            borderWidth: 1,
-          },
-          {
-            label: 'PIT_25010_P',
-            data: response4.data.map((chart) => chart.nu_valor),
-            backgroundColor: ['#ecf0f1'],
-            borderColor: 'black',
-            borderWidth: 1,
-          },
-          {
-            label: 'PIT_25010_A',
-            data: response5.data.map((chart) => chart.nu_valor),
-            backgroundColor: ['#2a71d0'],
-            borderColor: 'black',
-            borderWidth: 1,
-          },
-          {
-            label: 'PIT_25010',
-            data: response6.data.map((chart) => chart.nu_valor),
-            backgroundColor: ['lightblue'],
-            borderColor: 'black',
-            borderWidth: 1,
-          },
-          {
-            label: 'PIT_25020',
-            data: response7.data.map((chart) => chart.nu_valor),
-            backgroundColor: ['lightblue'],
-            borderColor: 'black',
-            borderWidth: 1,
+            borderWidth: 2,
           },
         ],
       })
@@ -137,7 +89,6 @@ const Charts = () => {
           <CCardHeader>Tendencias - Separador 2501</CCardHeader>
           <CCardBody>
             <CChartLine data={data} />
-            <CChartLine data={chart} />
           </CCardBody>
         </CCard>
       </CCol>

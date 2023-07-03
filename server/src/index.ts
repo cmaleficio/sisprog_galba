@@ -5,17 +5,10 @@ import { Server } from 'socket.io';
 import path from 'path';
 import { isDatabaseConnected, 
   getHistorico, 
-  getRealTimeData, 
-  getAnalogV_2501,
-  getTIT_250110_P,
-  getTIT_250110_A,
-  getTIT_250110,
-  getPIT_250110_P,
-  getPIT_250110_A,
-  getPIT_250110,
-  getPIT_250120,
-  getLIT_250130,
-  getH_LIT_250130} from './database';
+  getRealTimeData,
+  getRt_V_2501_LIT250130,
+  getHt_V_2501_LIT250130, 
+  } from './database';
 const { Pool, Client } = require('pg');
 
 // importing routes
@@ -61,22 +54,11 @@ app.use('/api/v1', IndexRoutes);
 app.get('/results', getHistorico);
 app.get('/rtd', getRealTimeData);
 
-// DATA V_2501
-app.get('/V_2501a', getAnalogV_2501)
-/* app.get('/V_2501d', getDigitalV_2501) */
+// EQUIPOS
+  //V2501
+  app.get('/lit250130_rt', getRt_V_2501_LIT250130)
+  app.get('/lit250130_ht', getHt_V_2501_LIT250130)
 
-
-  //2501 Instrumentos
-  app.get('/TIT_25010_P_V2501', getTIT_250110_P)
-  app.get('/TIT_25010_A_V2501', getTIT_250110_A)
-  app.get('/TIT_25010_V2501', getTIT_250110)
-  app.get('/PIT_25010_P_V2501', getPIT_250110_P)
-  app.get('/PIT_25010_A_V2501', getPIT_250110_A)
-  app.get('/PIT_25010_V2501', getPIT_250110)
-  app.get('/PIT_250120_V2501', getPIT_250120)
-  app.get('/LIT_250130_V2501', getLIT_250130)
-  app.get('/H_LIT_250130_V2501', getH_LIT_250130)
-  
 
 // Socket.io events
 io.on('connection', (socket) => {
