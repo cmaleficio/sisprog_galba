@@ -1,13 +1,41 @@
 require('dotenv').config();
 import express from 'express';
-import http from 'http';
+import http, { get } from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
 import { isDatabaseConnected, 
   getHistorico, 
   getRealTimeData,
   getRt_V_2501_LIT250130,
-  getHt_V_2501_LIT250130, 
+  getHt_V_2501_LIT250130,
+  getRt_V_2501_LIC250130_SP,
+  getHt_V_2501_LIC250130_SP,
+  getRt_V_2501_LIC250130_SO,
+  getHt_V_2501_LIC250130_SO,
+  getRt_V_2501_LIT250110,
+  getHt_V_2501_LIT250110,
+  getRt_V_2501_LIC250110_SP,
+  getHt_V_2501_LIC250110_SP,
+  getRt_V_2501_LIC250110_SO,
+  getHt_V_2501_LIC250110_SO,
+  getRt_V_2501_PIT250120,
+  getHt_V_2501_PIT250120,
+  getRt_V_2501_PIT250120_SP,
+  getHt_V_2501_PIT250120_SP,
+  getRt_V_2501_PIT250120_SO,
+  getHt_V_2501_PIT250120_SO,
+  getRt_V_2501_FIT250110,
+  getHt_V_2501_FIT250110,
+  getRt_V_2501_FIT250110_Ha,
+  getHt_V_2501_FIT250110_Ha,
+  getRt_V_2501_FIT250110_Hc,
+  getHt_V_2501_FIT250110_Hc,
+  getRt_V_2501_FIT250130,
+  getHt_V_2501_FIT250130,
+  getRt_V_2501_FIT250130_Ha,
+  getHt_V_2501_FIT250130_Ha,
+  getRt_V_2501_FIT250130_Hc,
+  getHt_V_2501_FIT250130_Hc, 
   } from './database';
 const { Pool, Client } = require('pg');
 
@@ -56,8 +84,52 @@ app.get('/rtd', getRealTimeData);
 
 // EQUIPOS
   //V2501
+    //Entrada de liquido
   app.get('/lit250130_rt', getRt_V_2501_LIT250130)
   app.get('/lit250130_ht', getHt_V_2501_LIT250130)
+  
+  app.get('/lic250130_sp_rt',getRt_V_2501_LIC250130_SP)
+  app.get('/lic250130_sp_ht',getHt_V_2501_LIC250130_SP)
+  
+  app.get('/lic250130_so_rt',getRt_V_2501_LIC250130_SO)
+  app.get('/lic250130_so_ht',getHt_V_2501_LIC250130_SO)
+    //Salida control de Crudo
+  app.get('/lit250110_rt',getRt_V_2501_LIT250110)
+  app.get('/lit250110_ht',getHt_V_2501_LIT250110)
+  
+  app.get('/lic250110_sp_rt',getRt_V_2501_LIC250110_SP)
+  app.get('/lic250110_sp_ht',getHt_V_2501_LIC250110_SP)
+  
+  app.get('/lic250110_so_rt', getRt_V_2501_LIC250110_SO)
+  app.get('/lic250110_so_ht', getHt_V_2501_LIC250110_SO)
+    //Salida control de Presion
+  app.get('/pit250120_rt', getRt_V_2501_PIT250120)
+  app.get('/pit250120_ht', getHt_V_2501_PIT250120)
+  
+  app.get('/pit250120_sp_rt', getRt_V_2501_PIT250120_SP)
+  app.get('/pit250120_sp_ht', getHt_V_2501_PIT250120_SP)
+  
+  app.get('/pit250120_so_rt',getRt_V_2501_PIT250120_SO)
+  app.get('/pit250120_so_ht',getHt_V_2501_PIT250120_SO)
+    //Flujo Crudo
+  app.get('/fit250110_rt', getRt_V_2501_FIT250110)
+  app.get('/fit250110_ht', getHt_V_2501_FIT250110)
+  
+  app.get('/fit250110_p_rt', getRt_V_2501_FIT250110_Ha)
+  app.get('/fit250110_p_ht', getHt_V_2501_FIT250110_Ha)
+  
+  app.get('/fit250110_a_rt', getRt_V_2501_FIT250110_Hc)
+  app.get('/fit250110_a_ht', getHt_V_2501_FIT250110_Hc)
+    //Flujo Agua
+  app.get('/fit250130_rt', getRt_V_2501_FIT250130 )
+  app.get('/fit250130_ht', getHt_V_2501_FIT250130)
+  
+  app.get('/fit250130_p_rt', getRt_V_2501_FIT250130_Ha)
+  app.get('/fit250130_p_ht', getHt_V_2501_FIT250130_Ha)
+  
+  app.get('/fit250130_a_rt', getRt_V_2501_FIT250130_Hc)
+  app.get('/fit250130_a_ht', getHt_V_2501_FIT250130_Hc)
+
 
 
 // Socket.io events

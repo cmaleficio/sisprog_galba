@@ -17,7 +17,7 @@ const Charts = () => {
       },
     ],
   })
-  const [chart, setChart] = useState({
+  /*const [chart, setChart] = useState({
     labels: [],
     datasets: [
       {
@@ -28,7 +28,7 @@ const Charts = () => {
         borderWidth: 1,
       },
     ],
-  })
+  }) */
 
   const loadAsyncStuff = async () => {
     try {
