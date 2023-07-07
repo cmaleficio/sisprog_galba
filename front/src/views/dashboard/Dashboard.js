@@ -17,11 +17,10 @@ import {
   CWidgetStatsA,
 } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
-import ReactImg from 'src/assets/images/V_2501.PNG'
+import ReactImg from 'src/assets/images/V_2501_1.PNG'
 const socket = io('http://localhost:3300')
 
 const Dashboard = () => {
-  //Entrada de liquido
   const [data, setData] = useState([])
   const [data2, setData2] = useState({
     labels: [],
@@ -466,7 +465,7 @@ const Dashboard = () => {
     }
 
     loadAsyncStuff()
-  })
+  }, [])
 
   useEffect(() => {
     // Establecer conexión con el socket
@@ -499,7 +498,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setLoaded(true)
-  }, [])
+  }, [data])
 
   return (
     <>
@@ -1416,7 +1415,7 @@ const Dashboard = () => {
                 </CCol>
               </CRow>
             </CCard>
-            {/* <CCard>
+            <CCard>
               <CCardHeader>
                 <h3>Separador V_2501</h3>
               </CCardHeader>
@@ -1445,7 +1444,7 @@ const Dashboard = () => {
                   </CTableBody>
                 </CTable>
               </CCardBody>
-            </CCard> */}
+            </CCard>
           </CCol>
         </CRow>
       )}

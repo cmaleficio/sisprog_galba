@@ -39,7 +39,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'TK_20006',
-        to: '/Dashboard',
+        to: '/Dashboard2',
       },
       {
         component: CNavItem,
