@@ -4,9 +4,9 @@ const corsOptions: CorsOptions = {
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['X-Requested-With', 'Content-Type', 'Accept', 'Origin', 'Authorization'],
-  credentials: true,
+  credentials: false,
   optionsSuccessStatus: 200,
-  preflightContinue: false,
+  preflightContinue: true,
 };
 
 export default corsOptions;

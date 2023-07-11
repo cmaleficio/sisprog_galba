@@ -1,14 +1,14 @@
 require('dotenv').config();
 import express from 'express';
-import http, { get } from 'http';
+import http,{get}  from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
 import { isDatabaseConnected, 
   getHistorico, 
   getRealTimeData, 
   } from './database';
-import { getRt_V2501_EntradaLiquido,  getRt_V_2501_LIT250130,  getHt_V_2501_LIT250130,  getRt_V_2501_LIC250130_SP,  getHt_V_2501_LIC250130_SP,  getRt_V_2501_LIC250130_SO,  getHt_V_2501_LIC250130_SO,  getRt_V_2501_LIT250110,  getHt_V_2501_LIT250110,  getRt_V_2501_LIC250110_SP,  getHt_V_2501_LIC250110_SP,  getRt_V_2501_LIC250110_SO,  getHt_V_2501_LIC250110_SO,  getRt_V_2501_PIT250120,  getHt_V_2501_PIT250120,  getRt_V_2501_PIT250120_SP,  getHt_V_2501_PIT250120_SP,  getRt_V_2501_PIT250120_SO,  getHt_V_2501_PIT250120_SO,  getRt_V_2501_FIT250110,  getHt_V_2501_FIT250110,  getRt_V_2501_FIT250110_Ha,  getHt_V_2501_FIT250110_Ha,  getRt_V_2501_FIT250110_Hc,  getHt_V_2501_FIT250110_Hc,  getRt_V_2501_FIT250130,  getHt_V_2501_FIT250130,  getRt_V_2501_FIT250130_Ha,  getHt_V_2501_FIT250130_Ha,  getRt_V_2501_FIT250130_Hc,  getHt_V_2501_FIT250130_Hc,  
-  getHt_V2501_EntradaLiquido, } from './querys/V_2501';
+import {   getRt_V_2501_LIT250130,  getHt_V_2501_LIT250130,  getRt_V_2501_LIC250130_SP,  getHt_V_2501_LIC250130_SP,  getRt_V_2501_LIC250130_SO,  getHt_V_2501_LIC250130_SO,  getRt_V_2501_LIT250110,  getHt_V_2501_LIT250110,  getRt_V_2501_LIC250110_SP,  getHt_V_2501_LIC250110_SP,  getRt_V_2501_LIC250110_SO,  getHt_V_2501_LIC250110_SO,  getRt_V_2501_PIT250120,  getHt_V_2501_PIT250120,  getRt_V_2501_PIT250120_SP,  getHt_V_2501_PIT250120_SP,  getRt_V_2501_PIT250120_SO,  getHt_V_2501_PIT250120_SO,  getRt_V_2501_FIT250110,  getHt_V_2501_FIT250110,  getRt_V_2501_FIT250110_Ha,  getHt_V_2501_FIT250110_Ha,  getRt_V_2501_FIT250110_Hc,  getHt_V_2501_FIT250110_Hc,  getRt_V_2501_FIT250130,  getHt_V_2501_FIT250130,  getRt_V_2501_FIT250130_Ha,  getHt_V_2501_FIT250130_Ha,  getRt_V_2501_FIT250130_Hc,  getHt_V_2501_FIT250130_Hc,  
+  } from './querys/V_2501';
 import { getHt_Tk20006_lit_20006, getHt_Tk20006_lit_20006A, getHt_Tk20006_tit_20001, getHt_Tk20006_tit_20002, getHt_Tk20006_tit_20003, getHt_Tk20006_tit_20006, getRt_Tk20006_lit_20006, getRt_Tk20006_lit_20006A, getRt_Tk20006_tit_20001, getRt_Tk20006_tit_20002, getRt_Tk20006_tit_20003, getRt_Tk20006_tit_20006 } from './querys/TK_20006';
 const { Pool, Client } = require('pg');
 
@@ -117,20 +117,20 @@ io.on('connection', (socket) => {
     if (err) {
       console.log("Error Conectando a la DB", err);
     } else {
-      client.on("notification", async (msg: any) => {
+      pool.on("notification", async (msg: any) => {
         pool.query(
           "SELECT * FROM t011_real_tag ORDER BY real_tag_id ASC",
           (error: any, results: any) => {
             if (error) {
               throw error;
             }
-            socket.emit('data', {
+            io.emit('data', {
               data: results.rows
             });
           }
         );
       });
-      const query = client.query("LISTEN t11update");
+      const query = pool.query("LISTEN t11update");
     }
   });
 

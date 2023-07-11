@@ -28,21 +28,6 @@ app.get("/results", async (req, res) => {
   });
 });
 
-/* app.get("/digital", async (req, res) => {
-  //Start the browser and create a browser instance
-  let browserInstance2 = browserObject.startBrowser();
-
-  // Pass the browser instance to the scraper controller
-  const dato: any = await scraperControllerSecond(browserInstance2);
-  const body = filteredData2(dato[0])
-  console.log("body ", body)
-  res.json({
-    dato: body.new_dato,
-    length: body.new_dato.length 
-  });
-}); */
-
-
 const filteredData = (data: Array<any>) => {
   const new_data: any = [];
   let rowLength = 28;

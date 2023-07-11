@@ -1,42 +1,48 @@
 const scraperObject = {
-  url: "http://167.175.224.135/AcquisitionData.html",
+  url: "http://167.175.224.142/AcquisitionData.html",
   async scraper(browser) {
-    let page = await browser.newPage();
-    console.log(`Navigating to ${this.url}...`);
-    await page.goto(this.url);
-    // Wait for the required DOM to be rendered
-    await page.waitForSelector("body");
-    // Get the link to all the required books
+    let data = null;
+    let page = null;
+    let retryCount = 0;
+    const maxRetries = 3;
 
-    const data = await page.$$eval("body > div > table", (tables) => {
-      return tables
-        .slice(2)
-        .filter(
-          (htmlElement) =>
-            htmlElement.querySelector("tbody > tr > td > font > b > a")
-              .textContent === " Puntos Analógicos" //
-        )
-        .map((htmlElement) =>
-          [...htmlElement.querySelectorAll("td")].map((e) =>
-            e.textContent.trim()
-          )
-        );
-    });
-    
-  await browser.close();
-  
-  return data
+    while (retryCount < maxRetries) {
+      try {
+        page = await browser.newPage();
+        console.log(`Navigating to ${this.url}...`);
+        await page.goto(this.url, { timeout: 60000 });
+        // Wait for the required DOM to be rendered
+        await page.waitForSelector("body");
+        // Get the link to all the required books
 
-    // let urls = await page.$$eval('section ol > li', links => {
-    // 	// Make sure the book to be scraped is in stock
-    // 	links = links.filter(link => link.querySelector('.instock.availability > i').textContent !== "In stock")
-    // 	// Extract the links from the data
-    // 	links = links.map(el => el.querySelector('h3 > a').href)
-    // 	return links;
-    // });
+        data = await page.$$eval("body > div > table", (tables) => {
+          return tables
+            .slice(2)
+            .filter(
+              (htmlElement) =>
+                htmlElement.querySelector("tbody > tr > td > font > b > a")
+                  .textContent === " Puntos Analógicos" //
+            )
+            .map((htmlElement) =>
+              [...htmlElement.querySelectorAll("td")].map((e) =>
+                e.textContent.trim()
+              )
+            );
+        });
+
+        await browser.close()
+        break; // Salir del bucle si la navegación y extracción de datos fue exitosa
+      } catch (error) {
+        console.error("Error de navegación:", error);
+        retryCount++;
+        console.log(`Reintentando (${retryCount}/${maxRetries})...`);
+      } finally {
+        await browser.close()
+      }
+    }
+
+    return data;
   },
-
-
 };
 
 module.exports = scraperObject;

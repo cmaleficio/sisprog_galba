@@ -465,7 +465,7 @@ const Dashboard = () => {
     }
 
     loadAsyncStuff()
-  }, [])
+  }, [setData])
 
   useEffect(() => {
     // Establecer conexión con el socket
@@ -498,7 +498,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setLoaded(true)
-  }, [data])
+  }, [])
 
   return (
     <>

@@ -10,31 +10,6 @@ const pool = new Pool({
 });
 
 // V_2501
-  //Entrada de liquido all
-  const getRt_V2501_EntradaLiquido =(req: any, response: any)=> {
-    pool.query(
-      "SELECT * FROM t011_real_tag WHERE real_tag_id in (36554767, 36554771, 36554772)",
-      (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows);
-    }
-    )
-
-  }
-  const getHt_V2501_EntradaLiquido = (req: any, response: any) => {
-    pool.query(
-      "SELECT * FROM t012_historico_tag WHERE historico_tag_id in (36554767, 36554771, 36554772) ORDER BY fe_valor DESC LIMIT 21",
-      (error: any, results: any) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows);
-    }
-    )
-  }
-
   // Entrada de liquido
   const getRt_V_2501_LIT250130 = (req: any, response: any) => {
     pool.query(
@@ -375,8 +350,6 @@ const pool = new Pool({
   
 export { 
   pool,
-  getRt_V2501_EntradaLiquido,
-  getHt_V2501_EntradaLiquido,
   getRt_V_2501_LIT250130,
   getHt_V_2501_LIT250130,
   getHt_V_2501_LIC250130_SP,
