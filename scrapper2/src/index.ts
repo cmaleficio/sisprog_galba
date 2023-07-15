@@ -14,7 +14,7 @@ app.listen(app.get("port"), async () => {
   console.log("app server on port", app.get("port"));
 });
 
-app.get("/results", async (req, res) => {
+app.get("/results", async (req: any, res: any) => {
   //Start the browser and create a browser instance
   let browserInstance = browserObject.startBrowser();
 
