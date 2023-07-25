@@ -1,5 +1,5 @@
 const scraperObject = {
-  url: "http://167.175.224.142/AcquisitionData.html",
+  url: "http://127.0.0.1:5500/html/index.html", // 
   async scraper(browser) {
     let data = null;
     let page = null;
@@ -9,7 +9,7 @@ const scraperObject = {
     while (retryCount < maxRetries) {
       try {
         page = await browser.newPage();
-        console.log(`Navigating to ${this.url}...`);
+        console.log(`Navigating to ${this.url}... Analogos`);
         await page.goto(this.url, { timeout: 60000 });
         // Wait for the required DOM to be rendered
         await page.waitForSelector("body");
@@ -46,3 +46,4 @@ const scraperObject = {
 };
 
 module.exports = scraperObject;
+
