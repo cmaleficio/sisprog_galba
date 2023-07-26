@@ -10,7 +10,9 @@ const { Pool, Client } = require("pg");
 import IndexRoutes from "./routes";
 import cors from "cors";
 import corsOptions from "./configs/corsOptions";
-import { getSisprogData, get_response } from "./querys/sisprogdata";
+import { getSisprogData, get_response } from "./querys/V2501";
+import { getSisprogData2 } from "./querys/TK20006";
+import { getGraphV2501 } from "./querys/graph/graph_v_2501";
 
 // Initialization
 const app = express();
@@ -23,14 +25,6 @@ app.use(cors(corsOptions));
 
 //Pool for DB connection
 const pool = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
-  port: process.env.POSTGRES_PORT,
-});
-
-const client = new Client({
   user: process.env.POSTGRES_USER,
   host: process.env.POSTGRES_HOST,
   database: process.env.POSTGRES_DB,
@@ -52,15 +46,24 @@ app.get("/rtd", getRealTimeData);
 
 // EQUIPOS
 
-app.get("/sisprogdata", getSisprogData);
+app.get("/V2501", getSisprogData);
+app.get("/TK20006", getSisprogData2);
+
+// GRAFICAS
+
+app.get("/Graph_v2501", getGraphV2501);
 
 // Socket.io events
 io.on("connection", (socket) => {
   console.log("Usuario conectado:", socket.id);
 
-  // TODO: disparar esto solo 1 vez
-
-  // Emitir un mensaje al cliente conectado
+  const client = new Client({
+    user: process.env.POSTGRES_USER,
+    host: process.env.POSTGRES_HOST,
+    database: process.env.POSTGRES_DB,
+    password: process.env.POSTGRES_PASSWORD,
+    port: process.env.POSTGRES_PORT,
+  });
 
   client.connect(async (err: any, res: any) => {
     if (err) {
@@ -85,7 +88,7 @@ io.on("connection", (socket) => {
         })
       });
       const query = await client.query("LISTEN t11update");
-      console.log(query)
+      //console.log(query)
     }
   });
 
