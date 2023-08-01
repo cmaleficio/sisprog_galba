@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
-import { CSpinner, CCard, CCol, CRow, CCardImage, CWidgetStatsA } from '@coreui/react'
+import { CCard, CCol, CRow, CCardImage, CWidgetStatsA } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import ReactImg from 'src/assets/images/V_2501_1.PNG'
 const socket = io('http://localhost:3300')

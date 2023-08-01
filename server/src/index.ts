@@ -13,6 +13,7 @@ import corsOptions from "./configs/corsOptions";
 import { getSisprogData, get_response } from "./querys/V2501";
 import { getSisprogData2 } from "./querys/TK20006";
 import { getGraphV2501 } from "./querys/graph/graph_v_2501";
+import { managerView, mvSepV2501_1, mvSepV2501graph } from "./querys/ManagerView";
 
 // Initialization
 const app = express();
@@ -48,10 +49,12 @@ app.get("/rtd", getRealTimeData);
 
 app.get("/V2501", getSisprogData);
 app.get("/TK20006", getSisprogData2);
+app.get("/mvTk20006", managerView)
+app.get("/mvSepV2501", mvSepV2501_1)
 
 // GRAFICAS
 
-app.get("/Graph_v2501", getGraphV2501);
+app.get("/mvSepV2501Graph", mvSepV2501graph);
 
 // Socket.io events
 io.on("connection", (socket) => {
@@ -87,7 +90,7 @@ io.on("connection", (socket) => {
           data: sisprogdata,
         })
       });
-      const query = await client.query("LISTEN t11update");
+      const query = await client.query("LISTEN t11update2");
       //console.log(query)
     }
   });

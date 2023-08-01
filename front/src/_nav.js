@@ -16,6 +16,16 @@ const _nav = [
     items: [
       {
         component: CNavItem,
+        name: 'Administrativo',
+        to: '/NewDash',
+        icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+        badge: {
+          color: 'success',
+          text: 'NEW',
+        },
+      },
+      {
+        component: CNavItem,
         name: 'V_2501',
         to: '/Dashboard',
         icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
@@ -29,7 +39,7 @@ const _nav = [
         name: 'TK_20006',
         to: '/tk_20006',
       },
-      {
+      /*  {
         component: CNavItem,
         name: 'Calentador TY23',
         to: '/CalTy23',
@@ -38,7 +48,7 @@ const _nav = [
         component: CNavItem,
         name: 'TK_501',
         to: '/TK_501',
-      },
+      }, */
       {
         component: CNavItem,
         name: 'Gráficas',

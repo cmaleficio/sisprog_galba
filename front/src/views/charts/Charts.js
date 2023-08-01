@@ -66,14 +66,7 @@ const Charts = () => {
         <CCol xg={6}>
           <CCard className="mb-4">
             <CCardHeader>{Graph_V2501}</CCardHeader>
-            <CCardBody>
-              {Graph_V2501.map((point, index) => (
-                <CCard key={indexP}>
-                  
-                </CCard>
-              ))
-              }
-            </CCardBody>
+            <CCardBody></CCardBody>
           </CCard>
         </CCol>
       </CRow>

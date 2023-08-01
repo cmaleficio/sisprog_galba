@@ -18,7 +18,7 @@ import {
 } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import ReactImg from 'src/assets/images/V_2501_1.PNG'
-const socket = io('http://localhost:3300')
+const socket = io('http://10.168.165.98:3300')
 
 const Dashboard = () => {
   const [data, setData] = useState([])
