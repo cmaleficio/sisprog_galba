@@ -2,7 +2,9 @@ import React from 'react'
 
 const Dashboard_old = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Dashboard = React.lazy(() => import('./views/dashboard/DashboardRefactor'))
-const Dashboard2 = React.lazy(() => import('./views/dashboard/Dashboard2'))
+const TK_20006 = React.lazy(() => import('./views/dashboard/TK_20006'))
+const NewDash = React.lazy(() => import('./views/dashboard/NewDash'))
+const TK_501 = React.lazy(() => import('./views/dashboard/TK_501'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -55,8 +57,10 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'V2501', element: Dashboard },
+  { path: '/TK_20006', name: 'TK_20006', element: TK_20006 },
+  { path: '/NewDash', name: 'CALTY23', element: NewDash },
+  { path: '/TK_501', name: 'TK_501', element: TK_501 },
   { path: '/dashboard_old', name: 'V2502', element: Dashboard_old },
-  { path: '/dashboard2', name: 'TK20006', element: Dashboard2 },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

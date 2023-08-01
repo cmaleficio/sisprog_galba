@@ -34,7 +34,7 @@ const getHistorico = (request: any, response: any) => {
 
 const getRealTimeData = (request: any, response: any) => {
   pool.query(
-    "SELECT * FROM t011_real_tag ORDER BY real_tag_id ASC",
+    "SELECT * FROM t011_real_tag ORDER BY real_tag_id DESC LIMIT 10",
     (error: any, results: any) => {
       if (error) {
         throw error;

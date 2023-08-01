@@ -56,20 +56,20 @@ const get_information_from_scrapper2 = async () => {
 
 let isRequestPending = false;
 
-cron.schedule("*/10 * * * * *", async function () {
+cron.schedule("*/30 * * * * *", async function () {
   if (isRequestPending) {
     console.log("Petición anterior aún está pendiente. Esperando...");
     return;
   } else {
-    console.log("Iniciando ---------------------Analogicos TR");
+    console.log("Iniciando ---------------------Analogicos TR", new Date(Date.now()));
     isRequestPending = true;
     try {
       const data_from_scrapper = await get_information_from_scrapper();
       if (data_from_scrapper) {
         const hasConexionWithDatabase = await isDatabaseConnected();
-        console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
+        //console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
         if (hasConexionWithDatabase) {
-          console.log(`BD conectada, ACTUALIZANDO DATA EN REALTIME`);
+          //console.log(`BD conectada, ACTUALIZANDO DATA EN REALTIME`);
           saveDataOnDatabaseReal(data_from_scrapper.data);
           isRequestPending = false;
         } else {
@@ -80,23 +80,23 @@ cron.schedule("*/10 * * * * *", async function () {
       console.log(`Error al obtener información del scrapper: ${error}`);
     }
   }
-  console.log("Analogicos Tiempo Real 10 Segundos");
+  console.log("Analogicos Tiempo Real 30 Segundos", new Date(Date.now()));
 });
 
 let isRequestPending2 = false;
 
-cron.schedule("*/10 * * * * *", async function () {
+cron.schedule("*/30 * * * * *", async function () {
   if (isRequestPending2) {
     console.log("Petición anterior aún está pendiente. Esperando...");
     return;
   } else {
-    console.log("iniciando --------------------- Digitales TR");
+    console.log("iniciando --------------------- Digitales TR", new Date(Date.now()));
     const data_from_scrapper = await get_information_from_scrapper2();
     if (data_from_scrapper) {
       const hasConexionWithDatabase = await isDatabaseConnected();
-      console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
+      //console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
       if (hasConexionWithDatabase) {
-        console.log(`La base de datos esta conectada, hare el insert`); //console.log("data_from_scrapper.data", data_from_scrapper.data)
+        //console.log(`La base de datos esta conectada, hare el insert`); //console.log("data_from_scrapper.data", data_from_scrapper.data)
         saveDataOnDatabaseReal2(data_from_scrapper.data);
         isRequestPending2 = false;
       } else {
@@ -106,7 +106,7 @@ cron.schedule("*/10 * * * * *", async function () {
       }
     }
   }
-  console.log("Digitales Tiempo Real 10 Segundos");
+  console.log("Digitales Tiempo Real 30 Segundos", new Date(Date.now()));
 });
 
 let isRequestPending3 = false;
@@ -116,13 +116,13 @@ cron.schedule("*/5 * * * *", async function () {
     console.log("Petición anterior aún está pendiente. Esperando...");
     return;
   } else {
-    console.log("iniciando --------------------- Analogicos HT");
+    console.log("iniciando --------------------- Analogicos HT", new Date(Date.now()));
     const data_from_scrapper = await get_information_from_scrapper();
     if (data_from_scrapper) {
       const hasConexionWithDatabase = await isDatabaseConnected();
-      console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
+      //console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
       if (hasConexionWithDatabase) {
-        console.log(`La base de datos esta conectada, hare el insert`); //console.log("data_from_scrapper.data", data_from_scrapper.data)
+        //console.log(`La base de datos esta conectada, hare el insert`); //console.log("data_from_scrapper.data", data_from_scrapper.data)
         saveDataOnDatabaseReal(data_from_scrapper.data);
         isRequestPending3 = false;
       } else {
@@ -132,7 +132,7 @@ cron.schedule("*/5 * * * *", async function () {
       }
     }
   }
-  console.log("Analogicos Historico");
+  console.log("Datos Analogicos Historicos ACTUALIZADOS", new Date(Date.now()));
 });
 let isRequestPending4 = false;
 
@@ -141,13 +141,13 @@ cron.schedule("*/5 * * * *", async function () {
     console.log("Petición anterior aún está pendiente. Esperando...");
     return;
   } else {
-    console.log("iniciando --------------------- Digitales HT");
+    console.log("iniciando --------------------- Digitales HT", new Date(Date.now()));
     const data_from_scrapper = await get_information_from_scrapper2();
     if (data_from_scrapper) {
       const hasConexionWithDatabase = await isDatabaseConnected();
-      console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
+      //console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
       if (hasConexionWithDatabase) {
-        console.log(`La base de datos esta conectada, hare el insert`); //console.log("data_from_scrapper.data", data_from_scrapper.data)
+        //console.log(`La base de datos esta conectada, hare el insert`); //console.log("data_from_scrapper.data", data_from_scrapper.data)
         saveDataOnDatabaseReal2(data_from_scrapper.data);
         isRequestPending4 = false;
       } else {
@@ -157,5 +157,5 @@ cron.schedule("*/5 * * * *", async function () {
       }
     }
   }
-  console.log("Digitales Historico");
+  console.log("Puntos Digitales Historicos Actualizados", new Date(Date.now()));
 });

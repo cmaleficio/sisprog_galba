@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
-import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-  CCardImage,
-  CWidgetStatsA,
-} from '@coreui/react'
+import { CCard, CCol, CRow, CCardImage, CWidgetStatsA } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import ReactImg from 'src/assets/images/TK20006_1.PNG'
-const socket = io('http://localhost:3300')
+const socket = io('http://10.168.165.98:3300')
 
 const Dashboard = () => {
   const [data, setData] = useState([])

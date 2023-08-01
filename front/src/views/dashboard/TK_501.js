@@ -3,10 +3,8 @@ import io from 'socket.io-client'
 import axios from 'axios'
 import { CCard, CCol, CRow, CCardImage, CWidgetStatsA } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
-import ReactImg from 'src/assets/images/V_2501_1.PNG'
+import ReactImg from 'src/assets/images/TK512_1.png'
 const socket = io('http://localhost:3300')
-
-//
 
 const Dashboard = () => {
   const [error, setError] = useState('')
@@ -48,7 +46,7 @@ const Dashboard = () => {
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
-      const response = await axios.get('http://localhost:3300/V2501')
+      const response = await axios.get('http://localhost:3300/tk_501')
       setSisprogData(response.data)
       setLoaded(true)
     }
@@ -71,7 +69,7 @@ const Dashboard = () => {
         <CRow>
           <CCol>
             <CCard>
-              <h2>Separador V-2501</h2>
+              <h2>Facilidades de PRODUCCIÓN CAMPO TEMBLADOR | CRUDO TK-501 | TK-502</h2>
               <CCardImage orientation="top" src={ReactImg} />
             </CCard>
             {sisprogData?.map((progData, indexP) => (

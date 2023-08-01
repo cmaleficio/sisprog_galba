@@ -1,18 +1,6 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import {
-  cilBell,
-  cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilNotes,
-  cilPencil,
-  cilPuzzle,
-  cilSpeedometer,
-  cilStar,
-} from '@coreui/icons'
+import { cilDrop, cilPencil, cilSpeedometer } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
@@ -28,6 +16,16 @@ const _nav = [
     items: [
       {
         component: CNavItem,
+        name: 'Administrativo',
+        to: '/NewDash',
+        icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+        badge: {
+          color: 'success',
+          text: 'NEW',
+        },
+      },
+      {
+        component: CNavItem,
         name: 'V_2501',
         to: '/Dashboard',
         icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
@@ -39,38 +37,18 @@ const _nav = [
       {
         component: CNavItem,
         name: 'TK_20006',
-        to: '/Dashboard2',
+        to: '/tk_20006',
+      },
+      /*  {
+        component: CNavItem,
+        name: 'Calentador TY23',
+        to: '/CalTy23',
       },
       {
         component: CNavItem,
-        name: 'Gráficas',
-        to: '/charts',
-        icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-      },
-    ],
-  },
-
-  {
-    component: CNavGroup,
-    name: 'TY_8',
-    to: '/base/placeholders',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Separador 2501',
-        to: '/Dashboard',
-        icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-        badge: {
-          color: 'info',
-          text: 'NEW',
-        },
-      },
-      {
-        component: CNavItem,
-        name: 'Tanque 20006',
-        to: '/Dashboard',
-      },
+        name: 'TK_501',
+        to: '/TK_501',
+      }, */
       {
         component: CNavItem,
         name: 'Gráficas',
@@ -92,6 +70,7 @@ const _nav = [
     to: '/realtime/realtime',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
+
   // {
   //   component: CNavTitle,
   //   name: 'Theme',

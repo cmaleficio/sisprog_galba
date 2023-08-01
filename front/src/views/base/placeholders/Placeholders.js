@@ -8,7 +8,6 @@ import {
   CCardText,
   CCardTitle,
   CCol,
-  CPlaceholder,
   CRow,
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
