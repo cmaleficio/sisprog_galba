@@ -44,3 +44,37 @@ export const mvSepV2501graph = (req:any, response:any) => {
       }
   )
 }
+
+export const mvTk501 = (req:any, response:any) => {
+  pool.query(
+      "SELECT * FROM t011_real_tag WHERE real_tag_id in (36554874, 36554875, 36554869)",
+      (error:any , results:any) => {
+          if (error) {
+           throw(error);
+          }
+      response.status(200).json(results.rows);
+      }
+  )
+}
+export const mvEx002 = (req:any, response:any) => {
+  pool.query(
+      "SELECT * FROM t011_real_tag WHERE real_tag_id in (36554946, 36554952, 36554956,36554957 ) ORDER BY real_tag_id ASC",
+      (error:any , results:any) => {
+          if (error) {
+           throw(error);
+          }
+      response.status(200).json(results.rows);
+      }
+  )
+}
+export const mvTqyBomba = (req:any, response:any) => {
+  pool.query(
+      "SELECT * FROM t011_real_tag WHERE real_tag_id in (36554867, 36554952) ORDER BY real_tag_id DESC",
+      (error:any , results:any) => {
+          if (error) {
+           throw(error);
+          }
+      response.status(200).json(results.rows);
+      }
+  )
+}

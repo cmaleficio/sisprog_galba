@@ -4,7 +4,7 @@ import axios from 'axios'
 import { CCard, CCol, CRow, CCardImage, CWidgetStatsA } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import ReactImg from 'src/assets/images/TK512_1.png'
-const socket = io('http://localhost:3300')
+const socket = io('http://10.168.161.40:3300')
 
 const Dashboard = () => {
   const [error, setError] = useState('')
@@ -46,7 +46,7 @@ const Dashboard = () => {
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
-      const response = await axios.get('http://localhost:3300/tk_501')
+      const response = await axios.get('http://10.168.161.40:3300/tk_501')
       setSisprogData(response.data)
       setLoaded(true)
     }

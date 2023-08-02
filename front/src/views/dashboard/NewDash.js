@@ -18,39 +18,54 @@ import {
 } from '@coreui/react'
 import { CChart } from '@coreui/react-chartjs'
 import ReactImg from 'src/assets/images/V_2501.PNG'
-const socket = io('http://localhost:3300')
+import ReactImg2 from 'src/assets/images/CALENTADOR_TY23_1.png'
+import ReactImg3 from 'src/assets/images/TK512_1.png'
+import ReactImg4 from 'src/assets/images/TK20006_1.PNG'
+import ReactImg5 from 'src/assets/images/Alarmas_1.PNG'
+const socket = io('http://10.168.161.40:3300')
 
 const Dashboard = () => {
   const [tk20006Data, settk20006Data] = useState([])
   const [sepV2501Data, setsepV2501Data] = useState([])
   const [mvSepV2501Data, setmvSepV2501Data] = useState([])
+  const [mvTk501Data, setmvTk501Data] = useState([])
+  const [mvEx002, setmvEx002Data] = useState([])
+  const [mvTqybmbData, setTqybmbData] = useState([])
+  const [control, setControlData] = useState([])
   const [error, setError] = useState('')
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get('http://localhost:3300/mvTk20006')
-      settk20006Data(response.data)
-      setLoaded(true)
+      try {
+        const responses = await Promise.all([
+          axios.get('http://10.168.161.40:3300/mvTk20006'),
+          axios.get('http://10.168.161.40:3300/mvSepV2501'),
+          axios.get('http://10.168.161.40:3300/mvSepV2501Graph'),
+          axios.get('http://10.168.161.40:3300/mvTk501'),
+          axios.get('http://10.168.161.40:3300/ex002'),
+          axios.get('http://10.168.161.40:3300/tqybmb'),
+        ])
+        settk20006Data(responses[0].data)
+        setsepV2501Data(responses[1].data)
+        setmvSepV2501Data(responses[2].data)
+        setmvTk501Data(responses[3].data)
+        setmvEx002Data(responses[4].data)
+        setTqybmbData(responses[5].data)
+        setLoaded(true)
+      } catch (error) {
+        setError(error.message)
+      }
     }
     const fetchData2 = async () => {
-      const response = await axios.get('http://localhost:3300/mvSepV2501')
-      setsepV2501Data(response.data)
-      setLoaded(true)
-    }
-    const fetchData3 = async () => {
-      const response = await axios.get('http://localhost:3300/mvSepV2501Graph')
-      setmvSepV2501Data(response.data)
-      setLoaded(true)
+      const response = await axios.get('http://10.168.161.40:3300/mvTk20006')
+      setControlData(response.data)
     }
 
-    // call the function
     fetchData()
     fetchData2()
-    fetchData3()
-      // make sure to catch any error
-      .catch(console.error)
   }, [])
+
 
   useEffect(() => {
     // Establecer conexión con el socket
@@ -62,7 +77,7 @@ const Dashboard = () => {
       'sisprogdata',
       (...args) => {
         console.log('llego la info')
-        settk20006Data(args[0]['sisprogdata'])
+        fetchData(args[0]['sisprogdata'])
       },
       socket.off('data'),
     )
@@ -89,8 +104,8 @@ const Dashboard = () => {
     <>
       {!loaded && 'Cargando'}
       {loaded && error && 'Hubo un error'}
-      {loaded && tk20006Data.length > 0 && (
-        <CContainer fluid>
+      {loaded && control.length > 0 && (
+        <CContainer>
           <CRow>
             <h1>
               <center>Despliegue Resumen Campo Temblador</center>
@@ -98,7 +113,7 @@ const Dashboard = () => {
             <h2>
               <center>Estación de producción Temblador 1 (EPT-1)</center>
             </h2>
-            <CCol sm={4}>
+            <CCol>
               <CCard>
                 <CCardHeader>
                   <h3>
@@ -107,7 +122,7 @@ const Dashboard = () => {
                     </center>
                   </h3>
                 </CCardHeader>
-                <CCardImage orientation="top" src={ReactImg} />
+                <CCardImage orientation="top" src={ReactImg4} />
                 <CCardBody>
                   <CTable aling="middle" color="dark" striped hover responsive>
                     <CTableHead>
@@ -172,7 +187,7 @@ const Dashboard = () => {
                 </CCardBody>
               </CCard>
             </CCol>
-            <CCol sm={4}>
+            <CCol>
               <CCard>
                 <CCardHeader>
                   <h2>
@@ -235,6 +250,8 @@ const Dashboard = () => {
                           ticks: {},
                         },
                         y: {
+                          min: 0,
+                          max: 90,
                           grid: {},
                           ticks: {},
                         },
@@ -244,16 +261,18 @@ const Dashboard = () => {
                 </CCardBody>
               </CCard>
             </CCol>
-            <CCol sm={4}>
+          </CRow>
+          <CRow>
+            <CCol>
               <CCard>
                 <CCardHeader>
                   <h2>
                     <center>
-                      <a href="http://localhost:3000/#/Dashboard">SEPARADOR V-2501</a>
+                      <a href="http://localhost:3000/#/TK501">TK 501/2</a>
                     </center>
                   </h2>
                 </CCardHeader>
-                <CCardImage orientation="top" src={ReactImg} />
+                <CCardImage orientation="top" src={ReactImg3} />
                 <CCardBody>
                   <CTable aling="middle" color="dark" striped hover responsive>
                     <CTableHead>
@@ -265,7 +284,7 @@ const Dashboard = () => {
                       </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                      {sepV2501Data.map((item, index) => (
+                      {mvTk501Data.map((item, index) => (
                         <>
                           <CTableRow key={index}>
                             <CTableDataCell>{item.disp_nombre.split('.')[2]}</CTableDataCell>
@@ -284,16 +303,16 @@ const Dashboard = () => {
                     className="mb-2"
                     style={{ height: '275px' }}
                     data={{
-                      labels: ['LIT-250110', 'LIT-250130'],
+                      labels: ['LIT-501'],
                       datasets: [
                         {
-                          label: ['Niveles de Entrada y Salida V2501'],
+                          label: ['Nivel de tanque'],
                           backgroundColor: ['#229954', '#310202'],
-                          data: mvSepV2501Data.map((value) => value.nu_valor),
+                          data: mvTk501Data.map((value) => value.nu_valor),
                         },
                       ],
                     }}
-                    labels="Niveles de Crudo e Interfaz"
+                    labels="Niveles de Crudo"
                     options={{
                       maintainAspectRatio: true,
                       plugins: {
@@ -307,6 +326,122 @@ const Dashboard = () => {
                           ticks: {},
                         },
                         y: {
+                          min: 1,
+                          max: 6,
+                          grid: {},
+                          ticks: {},
+                        },
+                      },
+                    }}
+                  />
+                </CCardBody>
+              </CCard>
+            </CCol>
+            <CCol>
+              <CCard>
+                <CCardHeader>
+                  <h2>
+                    <center>
+                      <a href="http://localhost:3000/#/TK501">EX-002 (Calentador) TY-23</a>
+                    </center>
+                  </h2>
+                </CCardHeader>
+                <CCardImage orientation="top" src={ReactImg2} />
+                <CCardBody>
+                  <CTable aling="middle" color="dark" striped hover responsive>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell>Nombre Equipo</CTableHeaderCell>
+                        <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                        {/* <CTableHeaderCell>Unidad de Medida</CTableHeaderCell> */}
+                        <CTableHeaderCell>Hora del Dato</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {mvEx002.map((item, index) => (
+                        <>
+                          <CTableRow key={index}>
+                            <CTableDataCell>{item.disp_nombre.split('.')[1]}</CTableDataCell>
+                            <CTableDataCell>{item.nu_valor}</CTableDataCell>
+                            <CTableDataCell>
+                              {item.fe_valor.split('T')[1].split('.')[0]}
+                            </CTableDataCell>
+                            {/* hay que hacer un split para mostrar solo la hora */}
+                          </CTableRow>
+                        </>
+                      ))}
+                    </CTableBody>
+                  </CTable>
+                </CCardBody>
+              </CCard>
+            </CCol>
+          </CRow>
+          <CRow>
+            <CCol sm={6}>
+              <CCard>
+                <CCardHeader>
+                  <h2>
+                    <center>
+                      <a href="http://localhost:3000/#">Tanque de 1500 BL y Bomba</a>
+                    </center>
+                  </h2>
+                </CCardHeader>
+                <CCardImage orientation="top" src={ReactImg5} />
+                <CCardBody>
+                  <CTable aling="middle" color="dark" striped hover responsive>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell>Nombre Equipo</CTableHeaderCell>
+                        <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                        {/* <CTableHeaderCell>Unidad de Medida</CTableHeaderCell> */}
+                        <CTableHeaderCell>Hora del Dato</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {mvTqybmbData.map((item, index) => (
+                        <>
+                          <CTableRow key={index}>
+                            <CTableDataCell>{item.disp_nombre.split('.')[1]}</CTableDataCell>
+                            <CTableDataCell>{item.nu_valor}</CTableDataCell>
+                            <CTableDataCell>
+                              {item.fe_valor.split('T')[1].split('.')[0]}
+                            </CTableDataCell>
+                            {/* hay que hacer un split para mostrar solo la hora */}
+                          </CTableRow>
+                        </>
+                      ))}
+                    </CTableBody>
+                  </CTable>
+                  <CChart
+                    type="bar"
+                    className="mb-2"
+                    style={{ height: '275px' }}
+                    data={{
+                      labels: ['LIT-501'],
+                      datasets: [
+                        {
+                          label: ['Nivel de tanque'],
+                          backgroundColor: ['#229954', '#310202'],
+                          data: mvTqybmbData.map((value) => value.nu_valor),
+                        },
+                      ],
+                    }}
+                    labels="Niveles de Crudo"
+                    options={{
+                      maintainAspectRatio: true,
+                      plugins: {
+                        legend: {
+                          labels: {},
+                        },
+                      },
+                      scales: {
+                        x: {
+                          grid: {},
+                          ticks: {},
+                        },
+                        y: {
+                          min: 0,
+                          max: 25,
                           grid: {},
                           ticks: {},
                         },
