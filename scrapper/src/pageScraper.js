@@ -1,49 +1,45 @@
+const axios = require('axios');
+
 const scraperObject = {
-  url: "http://167.175.224.142/AcquisitionData.html", // http://167.175.224.142/AcquisitionData.html
+  url: "http://167.175.224.142/AcquisitionData.html",
+  
   async scraper(browser) {
-    let data = null;
-    let page = null;
-    let retryCount = 0;
-    const maxRetries = 3;
-
-    while (retryCount < maxRetries) {
-      try {
-        page = await browser.newPage();
-        console.log(`Navigating to ${this.url}... Analogos`);
-        await page.goto(this.url, { timeout: 60000 });
-        // Wait for the required DOM to be rendered
-        await page.waitForSelector("body");
-        // Get the link to all the required books
-
-        data = await page.$$eval("body > div > table", (tables) => {
-          return tables
-            .slice(2)
-            .filter(
-              (htmlElement) =>
-                htmlElement.querySelector("tbody > tr > td > font > b > a")
-                  .textContent === " Puntos Analógicos" //
+    console.log("Verificando conexion con HTML -Analogicos-")
+    let response = await axios.head (scraperObject.url)
+    //console.log(response)
+    if(response.status === 200){
+      console.log("Result:", response.status)
+      let page = await browser.newPage();
+      console.log(`Navigating to ${this.url}... Analógicos`);
+      await page.goto(this.url);
+      // Wait for the required DOM to be rendered
+      await page.waitForSelector("body");
+      // Get the link to all the required books
+      
+      const data = await page.$$eval("body > div > table", (tables) => {
+        return tables
+          .slice(2)
+          .filter(
+            (htmlElement) =>
+              htmlElement.querySelector("tbody > tr > td > font > b > a")
+                .textContent === " Puntos Analógicos" //
+          )
+          .map((htmlElement) =>
+            [...htmlElement.querySelectorAll("td")].map((e) =>
+              e.textContent.trim()
             )
-            .map((htmlElement) =>
-              [...htmlElement.querySelectorAll("td")].map((e) =>
-                e.textContent.trim()
-              )
-            );
-        });
-
-        await browser.close()
-        break; // Salir del bucle si la navegación y extracción de datos fue exitosa
-      } catch (error) {
-        console.error("Error de navegación:", error);
-        retryCount++;
-        console.log(`Reintentando (${retryCount}/${maxRetries})...`);
-      } finally {
-        await browser.close()
-      }
+          );
+      });
+      await browser.close();
+      return data;
+    } else {
+      console.log("Enlace no disponible")
+      console.error("Error en la solicitud HTTP GET:", error.message);
+      console.log("Esperando 5 segundos para volver a intentar...");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      await this.scraper();
     }
-
-    return data;
   },
 };
 
 module.exports = scraperObject;
-

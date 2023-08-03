@@ -22,7 +22,8 @@ import ReactImg2 from 'src/assets/images/CALENTADOR_TY23_1.png'
 import ReactImg3 from 'src/assets/images/TK512_1.png'
 import ReactImg4 from 'src/assets/images/TK20006_1.PNG'
 import ReactImg5 from 'src/assets/images/Alarmas_1.PNG'
-const socket = io('http://10.168.161.40:3300')
+const URL = '10.168.161.47:3300' // o usar Ip local: 10.168.161.47:3300
+//const socket = io(`http://${URL}`)
 
 const Dashboard = () => {
   const [tk20006Data, settk20006Data] = useState([])
@@ -31,43 +32,13 @@ const Dashboard = () => {
   const [mvTk501Data, setmvTk501Data] = useState([])
   const [mvEx002, setmvEx002Data] = useState([])
   const [mvTqybmbData, setTqybmbData] = useState([])
-  const [control, setControlData] = useState([])
+  const [mvCrudo, setmvCrudoData] = useState([])
+  const [mvAgua, setmvAguaData] = useState([])
+  const [mvGas, setmvGasData] = useState([])
   const [error, setError] = useState('')
   const [loaded, setLoaded] = useState(false)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responses = await Promise.all([
-          axios.get('http://10.168.161.40:3300/mvTk20006'),
-          axios.get('http://10.168.161.40:3300/mvSepV2501'),
-          axios.get('http://10.168.161.40:3300/mvSepV2501Graph'),
-          axios.get('http://10.168.161.40:3300/mvTk501'),
-          axios.get('http://10.168.161.40:3300/ex002'),
-          axios.get('http://10.168.161.40:3300/tqybmb'),
-        ])
-        settk20006Data(responses[0].data)
-        setsepV2501Data(responses[1].data)
-        setmvSepV2501Data(responses[2].data)
-        setmvTk501Data(responses[3].data)
-        setmvEx002Data(responses[4].data)
-        setTqybmbData(responses[5].data)
-        setLoaded(true)
-      } catch (error) {
-        setError(error.message)
-      }
-    }
-    const fetchData2 = async () => {
-      const response = await axios.get('http://10.168.161.40:3300/mvTk20006')
-      setControlData(response.data)
-    }
-
-    fetchData()
-    fetchData2()
-  }, [])
-
-
-  useEffect(() => {
+  /* useEffect(() => {
     // Establecer conexión con el socket
     socket.on('connect', () => {
       console.log('Conexión establecida con el servidor de socket')
@@ -77,7 +48,7 @@ const Dashboard = () => {
       'sisprogdata',
       (...args) => {
         console.log('llego la info')
-        fetchData(args[0]['sisprogdata'])
+        setsepV2501Data(args[0]['data'])
       },
       socket.off('data'),
     )
@@ -94,6 +65,59 @@ const Dashboard = () => {
       socket.off('connect')
       socket.off('connect_error')
     }
+  }, []) */
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(`http://${URL}/mvTk20006`)
+      settk20006Data(response.data)
+    }
+    const fetchData2 = async () => {
+      const response = await axios.get(`http://${URL}/mvSepV2501`)
+      setsepV2501Data(response.data)
+    }
+    const fetchData3 = async () => {
+      const response = await axios.get(`http://${URL}/mvSepV2501Graph`)
+      setmvSepV2501Data(response.data)
+    }
+    const fetchData4 = async () => {
+      const response = await axios.get(`http://${URL}/mvTk501`)
+      setmvTk501Data(response.data)
+    }
+    const fetchData5 = async () => {
+      const response = await axios.get(`http://${URL}/ex002`)
+      setmvEx002Data(response.data)
+    }
+    const fetchData6 = async () => {
+      const response = await axios.get(`http://${URL}/tqybmb`)
+      setTqybmbData(response.data)
+    }
+    const fetchData7 = async () => {
+      const response = await axios.get(`http://${URL}/mvSCV2501`)
+      setmvCrudoData(response.data)
+    }
+    const fetchData8 = async () => {
+      const response = await axios.get(`http://${URL}/mvSAV2501`)
+      setmvAguaData(response.data)
+    }
+    const fetchData9 = async () => {
+      const response = await axios.get(`http://${URL}/mvSGV2501`)
+      setmvGasData(response.data)
+      setLoaded(true)
+    }
+
+    // call the function
+    fetchData()
+    fetchData2()
+    fetchData3()
+    fetchData4()
+    fetchData5()
+    fetchData6()
+    fetchData7()
+    fetchData8()
+    fetchData9()
+      // make sure to catch any error
+      .catch(console.error)
   }, [])
 
   useEffect(() => {
@@ -104,7 +128,7 @@ const Dashboard = () => {
     <>
       {!loaded && 'Cargando'}
       {loaded && error && 'Hubo un error'}
-      {loaded && control.length > 0 && (
+      {loaded && tk20006Data.length > 0 && (
         <CContainer>
           <CRow>
             <h1>
@@ -113,7 +137,7 @@ const Dashboard = () => {
             <h2>
               <center>Estación de producción Temblador 1 (EPT-1)</center>
             </h2>
-            <CCol>
+            <CCol sm={4}>
               <CCard>
                 <CCardHeader>
                   <h3>
@@ -187,14 +211,14 @@ const Dashboard = () => {
                 </CCardBody>
               </CCard>
             </CCol>
-            <CCol>
+            <CCol sm={4}>
               <CCard>
                 <CCardHeader>
-                  <h2>
+                  <h3>
                     <center>
                       <a href="http://localhost:3000/#/Dashboard">SEPARADOR V-2501</a>
                     </center>
-                  </h2>
+                  </h3>
                 </CCardHeader>
                 <CCardImage orientation="top" src={ReactImg} />
                 <CCardBody>
@@ -261,16 +285,14 @@ const Dashboard = () => {
                 </CCardBody>
               </CCard>
             </CCol>
-          </CRow>
-          <CRow>
-            <CCol>
+            <CCol sm={4}>
               <CCard>
                 <CCardHeader>
-                  <h2>
+                  <h3>
                     <center>
                       <a href="http://localhost:3000/#/TK501">TK 501/2</a>
                     </center>
-                  </h2>
+                  </h3>
                 </CCardHeader>
                 <CCardImage orientation="top" src={ReactImg3} />
                 <CCardBody>
@@ -337,14 +359,16 @@ const Dashboard = () => {
                 </CCardBody>
               </CCard>
             </CCol>
-            <CCol>
+          </CRow>
+          <CRow>
+            <CCol sm={4}>
               <CCard>
                 <CCardHeader>
-                  <h2>
+                  <h3>
                     <center>
                       <a href="http://localhost:3000/#/TK501">EX-002 (Calentador) TY-23</a>
                     </center>
-                  </h2>
+                  </h3>
                 </CCardHeader>
                 <CCardImage orientation="top" src={ReactImg2} />
                 <CCardBody>
@@ -375,16 +399,14 @@ const Dashboard = () => {
                 </CCardBody>
               </CCard>
             </CCol>
-          </CRow>
-          <CRow>
-            <CCol sm={6}>
+            <CCol sm={4}>
               <CCard>
                 <CCardHeader>
-                  <h2>
+                  <h3>
                     <center>
                       <a href="http://localhost:3000/#">Tanque de 1500 BL y Bomba</a>
                     </center>
-                  </h2>
+                  </h3>
                 </CCardHeader>
                 <CCardImage orientation="top" src={ReactImg5} />
                 <CCardBody>
@@ -448,6 +470,124 @@ const Dashboard = () => {
                       },
                     }}
                   />
+                </CCardBody>
+              </CCard>
+            </CCol>
+          </CRow>
+          <CRow>
+            <center>
+              <h3>Volumenes Separador V2501</h3>
+            </center>
+            <CCol sm={4}>
+              <CCard>
+                <CCardHeader>
+                  <h3>
+                    <center>
+                      <a href="http://localhost:3000/#">Salida de crudo</a>
+                    </center>
+                  </h3>
+                </CCardHeader>
+                <CCardBody>
+                  <CTable aling="middle" color="dark" striped hover responsive>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell>
+                          <strong>Nombre Equipo</strong>
+                        </CTableHeaderCell>
+                        <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                        {/* <CTableHeaderCell>Unidad de Medida</CTableHeaderCell> */}
+                        <CTableHeaderCell>Hora del Dato</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {mvCrudo.map((item, index) => (
+                        <>
+                          <CTableRow key={index}>
+                            <CTableDataCell>{item.disp_nombre.split('.')[2]}</CTableDataCell>
+                            <CTableDataCell>{item.nu_valor}</CTableDataCell>
+                            <CTableDataCell>
+                              {item.fe_valor.split('T')[1].split('.')[0]}
+                            </CTableDataCell>
+                            {/* hay que hacer un split para mostrar solo la hora */}
+                          </CTableRow>
+                        </>
+                      ))}
+                    </CTableBody>
+                  </CTable>
+                </CCardBody>
+              </CCard>
+            </CCol>
+            <CCol sm={4}>
+              <CCard>
+                <CCardHeader>
+                  <h3>
+                    <center>
+                      <a href="http://localhost:3000/#">Salida de agua</a>
+                    </center>
+                  </h3>
+                </CCardHeader>
+                <CCardBody>
+                  <CTable aling="middle" color="dark" striped hover responsive>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell>Nombre Equipo</CTableHeaderCell>
+                        <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                        {/* <CTableHeaderCell>Unidad de Medida</CTableHeaderCell> */}
+                        <CTableHeaderCell>Hora del Dato</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {mvAgua.map((item, index) => (
+                        <>
+                          <CTableRow key={index}>
+                            <CTableDataCell>{item.disp_nombre.split('.')[2]}</CTableDataCell>
+                            <CTableDataCell>{item.nu_valor}</CTableDataCell>
+                            <CTableDataCell>
+                              {item.fe_valor.split('T')[1].split('.')[0]}
+                            </CTableDataCell>
+                            {/* hay que hacer un split para mostrar solo la hora */}
+                          </CTableRow>
+                        </>
+                      ))}
+                    </CTableBody>
+                  </CTable>
+                </CCardBody>
+              </CCard>
+            </CCol>
+            <CCol sm={4}>
+              <CCard>
+                <CCardHeader>
+                  <h3>
+                    <center>
+                      <a href="http://localhost:3000/#">Salida de gas</a>
+                    </center>
+                  </h3>
+                </CCardHeader>
+                <CCardBody>
+                  <CTable aling="middle" color="dark" striped hover responsive>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell>Nombre Equipo</CTableHeaderCell>
+                        <CTableHeaderCell>Valor Recolectado</CTableHeaderCell>
+                        {/* <CTableHeaderCell>Unidad de Medida</CTableHeaderCell> */}
+                        <CTableHeaderCell>Hora del Dato</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {mvGas.map((item, index) => (
+                        <>
+                          <CTableRow key={index}>
+                            <CTableDataCell>{item.disp_nombre.split('.')[2]}</CTableDataCell>
+                            <CTableDataCell>{item.nu_valor}</CTableDataCell>
+                            <CTableDataCell>
+                              {item.fe_valor.split('T')[1].split('.')[0]}
+                            </CTableDataCell>
+                            {/* hay que hacer un split para mostrar solo la hora */}
+                          </CTableRow>
+                        </>
+                      ))}
+                    </CTableBody>
+                  </CTable>
                 </CCardBody>
               </CCard>
             </CCol>

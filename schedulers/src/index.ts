@@ -123,7 +123,7 @@ cron.schedule("*/5 * * * *", async function () {
       //console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
       if (hasConexionWithDatabase) {
         //console.log(`La base de datos esta conectada, hare el insert`); //console.log("data_from_scrapper.data", data_from_scrapper.data)
-        saveDataOnDatabaseReal(data_from_scrapper.data);
+        saveDataOnDatabaseHistorico(data_from_scrapper.data);
         isRequestPending3 = false;
       } else {
         console.log(
@@ -148,7 +148,7 @@ cron.schedule("*/5 * * * *", async function () {
       //console.log(`la base de datos esta conectada ? ${hasConexionWithDatabase}`);
       if (hasConexionWithDatabase) {
         //console.log(`La base de datos esta conectada, hare el insert`); //console.log("data_from_scrapper.data", data_from_scrapper.data)
-        saveDataOnDatabaseReal2(data_from_scrapper.data);
+        saveDataOnDatabaseHistorico2(data_from_scrapper.data);
         isRequestPending4 = false;
       } else {
         console.log(

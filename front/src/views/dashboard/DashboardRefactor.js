@@ -4,7 +4,8 @@ import axios from 'axios'
 import { CCard, CCol, CRow, CCardImage, CWidgetStatsA } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import ReactImg from 'src/assets/images/V_2501_1.PNG'
-const socket = io('http://10.168.161.40:3300')
+const URL = '10.168.161.47:3300' // o usar Ip local: 10.168.161.47:3300
+const socket = io(`http://${URL}`)
 
 //
 
@@ -48,7 +49,7 @@ const Dashboard = () => {
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
-      const response = await axios.get('http://10.168.161.40:3300/V2501')
+      const response = await axios.get(`http://${URL}/V2501`)
       setSisprogData(response.data)
       setLoaded(true)
     }

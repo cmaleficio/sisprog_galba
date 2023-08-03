@@ -58,7 +58,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'V2501', element: Dashboard },
   { path: '/TK_20006', name: 'TK_20006', element: TK_20006 },
-  { path: '/NewDash', name: 'CALTY23', element: NewDash },
+  { path: '/NewDash', name: 'Administrativo', element: NewDash },
   { path: '/TK_501', name: 'TK_501', element: TK_501 },
   { path: '/dashboard_old', name: 'V2502', element: Dashboard_old },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },

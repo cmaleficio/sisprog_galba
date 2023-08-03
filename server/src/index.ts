@@ -12,8 +12,7 @@ import cors from "cors";
 import corsOptions from "./configs/corsOptions";
 import { getSisprogData, get_response } from "./querys/V2501";
 import { getSisprogData2 } from "./querys/TK20006";
-import { getGraphV2501 } from "./querys/graph/graph_v_2501";
-import { managerView, mvEx002, mvSepV2501_1, mvSepV2501graph, mvTk501, mvTqyBomba } from "./querys/ManagerView";
+import { managerView, mvEx002, mvSalidaAguaV2501, mvSalidaCrudoV2501, mvSalidaGasV2501, mvSepV2501_1, mvSepV2501graph, mvTk501, mvTqyBomba } from "./querys/ManagerView";
 
 // Initialization
 const app = express();
@@ -54,6 +53,10 @@ app.get("/mvSepV2501", mvSepV2501_1)
 app.get("/mvTk501", mvTk501)
 app.get("/EX002", mvEx002)
 app.get("/tqybmb", mvTqyBomba)
+app.get("/mvSCV2501", mvSalidaCrudoV2501)
+app.get("/mvSAV2501", mvSalidaAguaV2501)
+app.get("/mvSGV2501", mvSalidaGasV2501)
+
 
 // GRAFICAS
 
