@@ -26,6 +26,16 @@ const _nav = [
       },
       {
         component: CNavItem,
+        name: 'Administrativo_0.1',
+        to: '/NewDashRefactor',
+        icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+        badge: {
+          color: 'success',
+          text: 'NEW',
+        },
+      },
+      {
+        component: CNavItem,
         name: 'V_2501',
         to: '/Dashboard',
         icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,

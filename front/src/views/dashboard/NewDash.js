@@ -22,7 +22,7 @@ import ReactImg2 from 'src/assets/images/CALENTADOR_TY23_1.png'
 import ReactImg3 from 'src/assets/images/TK512_1.png'
 import ReactImg4 from 'src/assets/images/TK20006_1.PNG'
 import ReactImg5 from 'src/assets/images/Alarmas_1.PNG'
-const URL = '10.168.161.47:3300' // o usar Ip local: 10.168.161.47:3300
+const URL = 'localhost:3300' // o usar Ip local: 10.168.161.47:3300
 //const socket = io(`http://${URL}`)
 
 const Dashboard = () => {

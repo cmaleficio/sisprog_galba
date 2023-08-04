@@ -13,6 +13,7 @@ import corsOptions from "./configs/corsOptions";
 import { getSisprogData, get_response } from "./querys/V2501";
 import { getSisprogData2 } from "./querys/TK20006";
 import { managerView, mvEx002, mvSalidaAguaV2501, mvSalidaCrudoV2501, mvSalidaGasV2501, mvSepV2501_1, mvSepV2501graph, mvTk501, mvTqyBomba } from "./querys/ManagerView";
+import { getTableView, get_data_for_the_table } from "./querys/tableView";
 
 // Initialization
 const app = express();
@@ -48,6 +49,8 @@ app.get("/rtd", getRealTimeData)
 
 app.get("/V2501", getSisprogData)
 app.get("/TK20006", getSisprogData2)
+app.get("/tables", getTableView)
+app.get("/gti", get_response)
 app.get("/mvTk20006", managerView)
 app.get("/mvSepV2501", mvSepV2501_1)
 app.get("/mvTk501", mvTk501)

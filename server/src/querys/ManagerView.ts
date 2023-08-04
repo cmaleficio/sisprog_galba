@@ -12,7 +12,7 @@ const pool = new Pool({
 
 export const managerView = (req:any, response:any) => {
   pool.query(
-      "SELECT * FROM t011_real_tag WHERE real_tag_id in (36554911, 36554916, 36554899, 36554899, 36554900, 36554901, 36554902) ORDER BY real_tag_id DESC",
+      "SELECT * FROM t011_real_tag WHERE real_tag_id in (36554911, 36554916, 36554899, 36554900, 36554901, 36554902) ORDER BY real_tag_id DESC",
       (error:any , results:any) => {
           if (error) {
            throw(error);

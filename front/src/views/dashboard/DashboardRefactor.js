@@ -4,7 +4,7 @@ import axios from 'axios'
 import { CCard, CCol, CRow, CCardImage, CWidgetStatsA } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import ReactImg from 'src/assets/images/V_2501_1.PNG'
-const URL = '10.168.161.47:3300' // o usar Ip local: 10.168.161.47:3300
+const URL = 'localhost:3300' // o usar Ip local: 10.168.161.47:3300
 const socket = io(`http://${URL}`)
 
 //
